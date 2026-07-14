@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MongliPool — Pitch Deck</title>
+<meta name="description" content="MongliPool: el primer privacy pool con cumplimiento regulatorio nativo en Stellar. Criptografía ZK real, verificada on-chain.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a1128'/%3E%3Cpath d='M6 22 L6 12 Q6 10 8 10 L10 10 L16 17 L22 10 L24 10 Q26 10 26 12 L26 22' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Cpath d='M16 4 L17 7 L20 6.2 L18 8.2 L20.5 9.5 L17.5 9.5 L16 13 L14.5 9.5 L11.5 9.5 L14 8.2 L12 6.2 L15 7 Z' fill='%2300F5D4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
+<style>
+  :root{
+    --bg:#05070f;
+    --navy-0:#080d1f;
+    --navy-1:#0a1128;
+    --navy-2:#0d1f3c;
+    --surface-1:#0f1730;
+    --surface-2:#111a36;
+    --border:rgba(148,163,184,0.14);
+    --border-strong:rgba(148,163,184,0.28);
+    --border-accent:rgba(5,213,161,0.28);
+    --text-primary:#eef2f9;
+    --text-secondary:#9aa7c2;
+    --text-muted:#5f6c8a;
+    --text-danger:#f87171;
+    --accent-green:#05D5A1;
+    --accent-blue:#0066FF;
+    --accent-blue-2:#3b82f6;
+    --bg-accent:rgba(5,213,161,0.08);
+    --font-sans:'Inter',system-ui,-apple-system,sans-serif;
+    --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:var(--font-sans);
+    background:
+      radial-gradient(1200px 700px at 15% -10%, rgba(0,102,255,0.16), transparent 60%),
+      radial-gradient(1000px 600px at 100% 110%, rgba(5,213,161,0.12), transparent 60%),
+      var(--bg);
+    color:var(--text-primary);
+    min-height:100vh;
+    overflow:hidden;
+  }
+  .app{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* Top bar */
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:1.1rem 1.75rem 0.9rem;
+    flex-shrink:0;
+  }
+  .brand{ display:flex; align-items:center; gap:0.6rem; }
+  .brand-mark{
+    width:26px; height:26px; border-radius:8px;
+    background:linear-gradient(135deg,var(--accent-green),var(--accent-blue));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .brand-mark svg{ width:16px; height:16px; }
+  .brand-name{ font-size:13px; font-weight:600; letter-spacing:0.02em; color:var(--text-primary); }
+  .brand-tag{ font-size:11px; color:var(--text-muted); font-family:var(--font-mono); margin-left:0.35rem; }
+  .counter{ font-size:12px; color:var(--text-muted); font-family:var(--font-mono); }
+  .progress-track{
+    position:absolute; top:0; left:0; right:0; height:2px; background:transparent;
+  }
+  .progress-bar{
+    height:100%; background:linear-gradient(90deg,var(--accent-green),var(--accent-blue));
+    transition:width 0.4s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* Slide viewport */
+  .viewport{
+    flex:1;
+    min-height:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0 clamp(1rem, 4vw, 3rem) 0.5rem;
+    position:relative;
+  }
+  .stage{
+    width:100%;
+    max-width:920px;
+    height:100%;
+    max-height:640px;
+    position:relative;
+  }
+  .slide{
+    position:absolute;
+    inset:0;
+    background:var(--surface-1);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:clamp(1.5rem, 3.5vw, 3rem);
+    display:flex;
+    flex-direction:column;
+    opacity:0;
+    transform:translateX(24px) scale(0.985);
+    pointer-events:none;
+    transition:opacity 0.45s cubic-bezier(.4,0,.2,1), transform 0.45s cubic-bezier(.4,0,.2,1);
+    overflow-y:auto;
+  }
+  .slide.active{
+    opacity:1;
+    transform:translateX(0) scale(1);
+    pointer-events:auto;
+  }
+  .slide.prev{ transform:translateX(-24px) scale(0.985); }
+
+  .eyebrow{
+    display:flex; align-items:center; gap:0.6rem; margin-bottom:1.4rem; flex-shrink:0;
+  }
+  .slide-tag{
+    font-size:11px; font-weight:600; color:var(--accent-green);
+    background:var(--bg-accent); border:1px solid var(--border-accent);
+    padding:3px 11px; border-radius:20px; letter-spacing:0.03em;
+  }
+  .slide-num{ font-size:11px; color:var(--text-muted); font-family:var(--font-mono); }
+
+  .slide-content{ flex:1; display:flex; flex-direction:column; justify-content:center; min-height:0; }
+
+  h1.slide-title, h2.slide-title{
+    font-size:clamp(1.15rem, 2.4vw, 1.55rem);
+    font-weight:700; color:var(--text-primary);
+    letter-spacing:-0.01em; margin-bottom:1.25rem; line-height:1.3;
+  }
+  .tagline{ font-size:13px; color:var(--text-secondary); margin-bottom:1.25rem; font-style:italic; }
+
+  /* Slide 1 — Hero */
+  .hero{
+    flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; gap:1.1rem;
+  }
+  .hero-logo{
+    width:72px; height:72px; border-radius:20px;
+    background:linear-gradient(135deg,var(--accent-green),var(--accent-blue));
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 40px -10px rgba(5,213,161,0.4);
+  }
+  .hero-logo svg{ width:40px; height:40px; }
+  .hero-title{ font-size:clamp(1.8rem,4.5vw,2.6rem); font-weight:800; letter-spacing:-0.02em; }
+  .hero-sub{ font-size:14px; color:var(--text-secondary); max-width:440px; line-height:1.7; }
+  .hero-badges{ display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center; margin-top:0.3rem; }
+  .badge{ font-size:11px; font-weight:500; padding:4px 12px; border-radius:20px; border:1px solid; }
+  .badge-green{ color:var(--accent-green); border-color:rgba(5,213,161,0.4); background:rgba(5,213,161,0.08); }
+  .badge-blue{ color:#60a5fa; border-color:rgba(59,130,246,0.4); background:rgba(59,130,246,0.08); }
+
+  /* Slide 2 — Problem */
+  .problem-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .prob-card{ background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:1.1rem; transition:border-color .2s; }
+  .prob-icon{ font-size:20px; margin-bottom:0.6rem; }
+  .prob-title{ font-size:13px; font-weight:600; margin-bottom:0.3rem; }
+  .prob-desc{ font-size:12px; color:var(--text-secondary); line-height:1.55; }
+  .prob-bad{ border-color:rgba(248,113,113,0.25); }
+  .prob-good{ border-color:rgba(5,213,161,0.35); background:linear-gradient(135deg, rgba(5,213,161,0.06), var(--surface-2)); }
+
+  /* Slide 3 — Solution */
+  .steps{ display:flex; gap:0; position:relative; }
+  .step{ flex:1; text-align:center; padding:1rem 0.6rem; position:relative; }
+  .step-num{
+    width:38px; height:38px; border-radius:50%;
+    background:linear-gradient(135deg,var(--accent-green),var(--accent-blue));
+    display:flex; align-items:center; justify-content:center; margin:0 auto 0.8rem;
+    color:#03150f; font-size:13px; font-weight:700;
+  }
+  .step-title{ font-size:12.5px; font-weight:600; margin-bottom:0.3rem; }
+  .step-desc{ font-size:11.5px; color:var(--text-secondary); line-height:1.55; }
+  .step-arrow{ position:absolute; right:-8px; top:20px; color:var(--accent-green); font-size:16px; }
+
+  /* Slide 4 — Tech */
+  .tech-grid{ display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; }
+  .tech-card{ background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:0.95rem; }
+  .tech-label{ font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.3rem; }
+  .tech-value{ font-size:13.5px; font-weight:600; font-family:var(--font-mono); }
+  .tech-sub{ font-size:11px; color:var(--text-secondary); margin-top:0.2rem; }
+
+  /* Slide 5 — Compliance */
+  .compliance-row{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.8rem; margin-bottom:1rem; }
+  .comp-card{ background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:1rem; text-align:center; }
+  .comp-icon{ font-size:24px; margin-bottom:0.55rem; color:var(--accent-green); }
+  .comp-title{ font-size:12px; font-weight:600; margin-bottom:0.3rem; }
+  .comp-desc{ font-size:11px; color:var(--text-secondary); line-height:1.55; }
+  .analogy{ padding:0.85rem 1.1rem; background:rgba(5,213,161,0.06); border:1px solid var(--border-accent); border-radius:12px; }
+  .analogy p{ font-size:12px; color:var(--text-secondary); line-height:1.65; }
+  .analogy strong{ color:var(--accent-green); }
+
+  /* Slide 6 — Benchmarking */
+  .bench-table{ width:100%; border-collapse:collapse; font-size:12.5px; }
+  .bench-table th{ text-align:left; color:var(--text-muted); font-weight:500; font-size:11px; padding:0.6rem 0.8rem; border-bottom:1px solid var(--border); }
+  .bench-table td{ padding:0.7rem 0.8rem; border-bottom:1px solid var(--border); color:var(--text-secondary); }
+  .bench-table tr:last-child td{ border-bottom:none; }
+  .bench-table .us{ background:rgba(5,213,161,0.05); border-radius:8px; }
+  .bench-table .us td{ color:var(--text-primary); font-weight:500; }
+  .check{ color:var(--accent-green); }
+  .cross{ color:var(--text-danger); }
+  .partial{ color:#f59e0b; }
+
+  /* Slide 7 — Demo */
+  .demo-flow{ display:flex; gap:0.7rem; align-items:stretch; margin-bottom:1rem; flex-wrap:wrap; }
+  .demo-step{ flex:1; min-width:140px; background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:0.9rem; }
+  .demo-step-num{ font-size:10px; color:var(--accent-green); font-family:var(--font-mono); margin-bottom:0.4rem; }
+  .demo-step-title{ font-size:12px; font-weight:600; margin-bottom:0.3rem; }
+  .demo-step-desc{ font-size:11px; color:var(--text-secondary); line-height:1.55; }
+  .links-row{ display:flex; gap:0.7rem; flex-wrap:wrap; }
+  .link-card{ flex:1; min-width:140px; background:rgba(5,213,161,0.05); border:1px solid var(--border-accent); border-radius:12px; padding:0.8rem; font-size:11px; color:var(--text-secondary); }
+  .link-card strong{ color:var(--accent-green); display:block; margin-bottom:0.3rem; }
+
+  /* Slide 8 — Roadmap */
+  .roadmap{ display:flex; flex-direction:column; gap:0.55rem; }
+  .road-item{ display:flex; gap:1rem; align-items:flex-start; padding:0.85rem 1rem; background:var(--surface-2); border:1px solid var(--border); border-radius:12px; }
+  .road-phase{ font-size:10px; color:var(--text-muted); font-family:var(--font-mono); min-width:65px; padding-top:2px; line-height:1.4; }
+  .road-content{ flex:1; }
+  .road-title{ font-size:12.5px; font-weight:600; margin-bottom:0.25rem; }
+  .road-items{ font-size:11px; color:var(--text-secondary); line-height:1.6; }
+  .road-status{ font-size:10px; font-weight:600; padding:3px 10px; border-radius:10px; white-space:nowrap; }
+  .status-done{ background:rgba(5,213,161,0.12); color:var(--accent-green); }
+  .status-next{ background:rgba(59,130,246,0.12); color:#60a5fa; }
+  .status-future{ background:var(--surface-1); color:var(--text-muted); border:1px solid var(--border); }
+
+  /* Slide 9 — Team */
+  .team-wrap{ flex:1; display:flex; align-items:center; justify-content:center; }
+  .team-card{
+    background:linear-gradient(135deg,var(--navy-1),var(--navy-2));
+    border:1px solid var(--border-strong);
+    border-radius:16px; padding:2.5rem 2rem;
+    display:flex; flex-direction:column; align-items:center; gap:0.9rem;
+    max-width:380px;
+  }
+  .team-avatar{
+    width:68px; height:68px; border-radius:50%;
+    background:linear-gradient(135deg,var(--accent-green),var(--accent-blue));
+    display:flex; align-items:center; justify-content:center;
+    font-size:22px; font-weight:700; color:#03150f;
+  }
+  .team-name{ font-size:18px; font-weight:700; letter-spacing:0.12em; }
+  .team-dao{ font-size:13px; color:var(--accent-green); }
+  .team-links{ display:flex; gap:0.7rem; margin-top:0.2rem; }
+  .team-link{ font-size:12px; color:var(--text-secondary); padding:5px 13px; border:1px solid var(--border-strong); border-radius:20px; display:flex; align-items:center; gap:4px; }
+  .team-note{ margin-top:0.4rem; font-size:12px; color:var(--text-muted); text-align:center; max-width:300px; line-height:1.65; }
+
+  /* Slide 10 — CTA */
+  .cta-wrap{ flex:1; display:flex; align-items:center; justify-content:center; }
+  .cta-bg{
+    background:linear-gradient(135deg,var(--navy-1),var(--navy-2));
+    border:1px solid var(--border-strong);
+    border-radius:16px; padding:2.25rem 2rem; text-align:center;
+    display:flex; flex-direction:column; gap:1rem; align-items:center; width:100%; max-width:460px;
+  }
+  .cta-title{ font-size:24px; font-weight:800; }
+  .cta-sub{ font-size:13px; color:var(--text-secondary); max-width:360px; line-height:1.65; }
+  .cta-links{ display:grid; grid-template-columns:1fr 1fr; gap:0.7rem; width:100%; }
+  .cta-link{ background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); border-radius:10px; padding:0.8rem; }
+  .cta-link-label{ font-size:10px; color:var(--text-muted); margin-bottom:0.3rem; }
+  .cta-link-url{ font-size:11px; color:var(--accent-green); font-family:var(--font-mono); word-break:break-all; }
+  .contracts{ display:flex; flex-direction:column; gap:0.3rem; width:100%; }
+  .contract-row{ display:flex; justify-content:space-between; align-items:center; font-size:10.5px; padding:0.4rem 0; border-bottom:1px solid rgba(255,255,255,0.07); }
+  .contract-name{ color:var(--text-muted); }
+  .contract-id{ color:var(--accent-green); font-family:var(--font-mono); }
+  .cta-footer{ font-size:11px; color:#475569; margin-top:0.3rem; }
+
+  /* Bottom controls */
+  .controls{
+    display:flex; align-items:center; justify-content:center; gap:1.5rem;
+    padding:1rem 0 1.6rem; flex-shrink:0;
+  }
+  .nav-btn{
+    width:38px; height:38px; border-radius:50%;
+    background:var(--surface-1); border:1px solid var(--border-strong);
+    color:var(--text-primary); font-size:16px;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:all 0.2s;
+  }
+  .nav-btn:hover{ background:var(--surface-2); border-color:var(--accent-green); color:var(--accent-green); }
+  .nav-btn:disabled{ opacity:0.3; cursor:default; }
+  .nav-btn:disabled:hover{ background:var(--surface-1); border-color:var(--border-strong); color:var(--text-primary); }
+  .dots{ display:flex; gap:7px; }
+  .dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--border-strong); border:none; cursor:pointer;
+    transition:all 0.25s; padding:0;
+  }
+  .dot.active{ background:var(--accent-green); width:20px; border-radius:4px; }
+  .dot:hover{ background:var(--text-secondary); }
+
+  .hint{
+    position:fixed; bottom:1rem; right:1.25rem; font-size:10.5px; color:var(--text-muted);
+    font-family:var(--font-mono); display:flex; align-items:center; gap:4px;
+  }
+
+  @media (max-width:640px){
+    .problem-grid, .tech-grid{ grid-template-columns:1fr; }
+    .compliance-row{ grid-template-columns:1fr; }
+    .steps{ flex-direction:column; }
+    .step-arrow{ display:none; }
+    .demo-flow{ flex-direction:column; }
+    .bench-table{ font-size:11px; }
+    .bench-table th, .bench-table td{ padding:0.5rem 0.4rem; }
+    .hint{ display:none; }
+    .cta-links{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="progress-track"><div class="progress-bar" id="progressBar" style="width:10%"></div></div>
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 22 L6 12 Q6 10 8 10 L10 10 L16 17 L22 10 L24 10 Q26 10 26 12 L26 22" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+      <span class="brand-name">MongliPool</span>
+      <span class="brand-tag">Stellar Hacks: ZK 2025</span>
+    </div>
+    <span class="counter" id="counter">01 / 10</span>
+  </div>
+
+  <div class="viewport">
+    <div class="stage" id="stage">
+
+      <!-- SLIDE 1 — HERO -->
+      <section class="slide">
+        <div class="eyebrow"><span class="slide-tag">Portada</span></div>
+        <div class="hero">
+          <div class="hero-logo">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 22 L6 12 Q6 10 8 10 L10 10 L16 17 L22 10 L24 10 Q26 10 26 12 L26 22" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <path d="M8 22 Q12 19.5 16 22 Q20 24.5 24 22" stroke="#03150f" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+              <path d="M16 4 L17 7 L20 6.2 L18 8.2 L20.5 9.5 L17.5 9.5 L16 13 L14.5 9.5 L11.5 9.5 L14 8.2 L12 6.2 L15 7 Z" fill="#03150f"/>
+            </svg>
+          </div>
+          <div class="hero-title">MongliPool</div>
+          <div class="hero-sub">El primer privacy pool con cumplimiento regulatorio nativo en Stellar — criptografía ZK real, verificada on-chain.</div>
+          <div class="hero-badges">
+            <span class="badge badge-green">Groth16 / BN254</span>
+            <span class="badge badge-blue">Stellar Testnet</span>
+            <span class="badge badge-green">Stellar Hacks: ZK 2025</span>
+            <span class="badge badge-blue">Mongli DAO</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2 — PROBLEMA -->
+      <section class="slide">
+        <div class="eyebrow"><span class="slide-tag">El problema</span></div>
+        <div class="slide-content">
+          <h2 class="slide-title">En blockchain, la privacidad y el cumplimiento no coexisten</h2>
+          <div class="problem-grid">
+            <div class="prob-card prob-bad">
+              <div class="prob-icon"><i class="ti ti-eye" style="color:var(--text-danger)"></i></div>
+              <div class="prob-title">Transacciones públicas</div>
+              <div class="prob-desc">Cualquier persona puede ver quién envió dinero, cuánto, y cuándo. Zero privacidad por defecto en Stellar.</div>
+            </div>
+            <div class="prob-card prob-bad">
+              <div class="prob-icon"><i class="ti ti-ban" style="color:var(--text-danger)"></i></div>
+              <div class="prob-title">Mixers sin control</div>
+              <div class="prob-desc">Las soluciones actuales (mixers/tumblers) ofrecen privacidad pero sin cumplimiento regulatorio — facilitando lavado de dinero.</div>
+            </div>
+            <div class="prob-card prob-bad">
+              <div class="prob-icon"><i class="ti ti-building-bank" style="color:var(--text-danger)"></i></div>
+              <div class="prob-title">DAOs y empresas expuestos</div>
+              <div class="prob-desc">Tesoreros y pagadores en Stellar deben elegir entre privacidad o compliance. No hay una tercera opción.</div>
+            </div>
+            <div class="prob-card prob-good">
+              <div class="prob-icon"><i class="ti ti-shield-check" style="color:var(--accent-green)"></i></div>
+              <div class="prob-title">La oportunidad</div>
+              <div class="prob-desc">ZK proofs permiten demostrar legitimidad sin revelar detalles — el ingrediente que faltaba para tener ambas cosas.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3 — SOLUCIÓN -->
+      <section class="slide">
+        <div class="eyebrow"><span class="slide-tag">La solución</span></div>
+        <div class="slide-content">
+          <h2 class="slide-title">MongliPool: privacidad + compliance en 3 pasos</h2>
+          <p class="tagline">"Depositas por una puerta, retiras por otra. Nadie sabe que son tuyas — pero el auditor puede verificarlo."</p>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">01</div>
+              <div class="step-title">Depositar</div>
+              <div class="step-desc">Tu wallet genera un commitment hash + recibo secreto. Los fondos entran al pool. Nadie sabe quién depositó.</div>
+              <span class="step-arrow"><i class="ti ti-chevron-right"></i></span>
+            </div>
+            <div class="step">
+              <div class="step-num">02</div>
+              <div class="step-title">Prueba ZK</div>
+              <div class="step-desc">Tu dispositivo genera una prueba matemática (21,781 constraints) que demuestra que eres dueño de un depósito, sin decir cuál.</div>
+              <span class="step-arrow"><i class="ti ti-chevron-right"></i></span>
+            </div>
+            <div class="step">
+              <div class="step-num">03</div>
+              <div class="step-title">Retirar en privado</div>
+              <div class="step-desc">Los fondos llegan a cualquier dirección. Nadie puede vincular el retiro con el depósito original.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4 — TECNOLOGÍA -->
+      <section class="slide">
+        <div class="eyebrow"><span class="slide-tag">Stack técnico</span></div>
+        <div class="slide-content">
+          <h2 class="slide-title">Criptografía real — no simulaciones</h2>
+          <div class="tech-grid">
+            <div class="tech-card">
+              <div class="tech-label">Circuito ZK</div>
+              <div class="tech-value">Groth16 / BN254</div>
+              <div class="tech-sub">21,781 constraints · depth 20 · Circom 2</div>
+            </div>
+            <div class="tech-card">
+              <div class="tech-label">Verificación on-chain</div>
+              <div class="tech-value">Soroban SDK v25</div>
+              <div class="tech-sub">BN254 host functions nativas · Protocolo 26</div>
+            </div>
+            <div class="tech-card">
+              <div class="tech-label">Contratos Soroban</div>
+              <div class="tech-value">3 contratos · 18/18 tests</div>
+              <div class="tech-sub">groth16-verifier · privacy-pool · asp-registry</div>
+            </div>
+            <div class="tech-card">
+              <div class="tech-label">View key</div>
+              <div class="tech-value">NaCl box asimétrico</div>
+              <div class="tech-sub">Curve25519 · keypair efímero por depósito</div>
+            </div>
+            <div class="tech-card">
+              <div class="tech-label">Proof generation</div>
+              <div class="tech-value">Client-side WASM</div>
+              <div class="tech-sub">snarkjs en el browser · sin servidor · ~30s</div>
+            </div>
+            <div class="tech-card">
+              <div class="tech-label">Frontend</div>
+              <div class="tech-value">React + Vite + TS</div>
+              <div class="tech-sub">TailwindCSS · stellar-wallets-kit · i18n ES/EN</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5 — COMPLIANCE -->
+      <section class="slide">
+        <div class="eyebrow"><span class="slide-tag">Compliance</span></div>
+        <div class="slide-content">
+          <h2 class="slide-title">Lo que nos diferencia: compliance integrado desde el diseño</h2>
+          <div class="compliance-row">
+            <div class="comp-card">
+              <div class="comp-icon"><i class="ti ti-list-check"></i></div>
+              <div class="comp-title">ASP (Authorized Set Provider)</div>
+              <div class="comp-desc">Mongli DAO mantiene una lista de commitments aprobados. Solo usuarios legítimos pueden retirar.</div>
+            </div>
+            <div class="comp-card">
+              <div class="comp-icon"><i class="ti ti-key"></i></div>
+              <div class="comp-title">View key asimétrica</div>
+              <div class="comp-desc">El auditor del DAO usa su clave privada Curve25519 para descifrar el historial. El público no puede.</div>
+            </div>
+            <div class="comp-card">
+              <div class="comp-icon"><i class="ti ti-shield-lock"></i></div>
+              <div class="comp-title">Doble Merkle proof</div>
+              <div class="comp-desc">Cada retiro prueba pertenencia al pool tree Y al ASP tree. Si no estás aprobado, la prueba ZK falla.</div>
+            </div>
+          </div>
+          <div class="analogy">
+            <p><strong>Analogía simple:</strong> MongliPool es como un banco que procesa pagos en efectivo anónimos, pero donde un auditor con llave maestra puede revisar los registros si un regulador lo requiere. El público no ve nada; el regulador lo puede ver todo con autorización.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6 — BENCHMARKING -->
+      <section class="slide">
+        <div class="eyebrow"><span class="slide-tag">Comparativa</span></div>
+        <div class="slide-content">
+          <h2 class="slide-title">MongliPool vs. alternativas existentes</h2>
+          <table class="bench-table">
+            <thead>
+              <tr>
+                <th>Característica</th>
+                <th>Tornado Cash</th>
+                <th>Mixers tradicionales</th>
+                <th style="color:var(--accent-green)">MongliPool</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Privacidad de routing</td>
+                <td class="check"><i class="ti ti-check"></i></td>
+                <td class="check"><i class="ti ti-check"></i></td>
+                <td class="us check"><i class="ti ti-check"></i></td>
+              </tr>
+              <tr>
+                <td>Compliance / ASP integrado</td>
+                <td class="cross"><i class="ti ti-x"></i></td>
+                <td class="cross"><i class="ti ti-x"></i></td>
+                <td class="us check"><i class="ti ti-check"></i></td>
+              </tr>
+              <tr>
+                <td>Auditoría selectiva (view key)</td>
+                <td class="cross"><i class="ti ti-x"></i></td>
+                <td class="cross"><i class="ti ti-x"></i></td>
+                <td class="us check"><i class="ti ti-check"></i></td>
+              </tr>
+              <tr>
+                <td>Verificación ZK on-chain en Stellar</td>
+                <td class="cross"><i class="ti ti-x"></i></td>
+                <td class="cross"><i class="ti ti-x"></i></td>
+                <td class="us check"><i class="ti ti-check"></i></td>
+              </tr>
+              <tr>
+                <td>Proof generation en browser</td>
+                <td class="partial"><i class="ti ti-minus"></i></td>
+                <td class="cross"><i class="ti ti-x"></i></td>
+                <td class="us check"><i class="ti ti-check"></i></td>
+              </tr>
+              <tr>
+                <td>Auditoría de seguridad externa</td>
+                <td class="check"><i class="ti ti-check"></i></td>
+                <td class="partial"><i class="ti ti-minus"></i></td>
+                <td class="us cross"><i class="ti ti-x"></i> (pendiente)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SLIDE 7 — DEMO -->
+      <section class="slide">
+        <div class="eyebrow"><span class="slide-tag">Demo en vivo</span></div>
+        <div class="slide-content">
+          <h2 class="slide-title">Flujo end-to-end verificado en testnet</h2>
+          <div class="demo-flow">
+            <div class="demo-step">
+              <div class="demo-step-num">PASO 1</div>
+              <div class="demo-step-title">Conectar wallet</div>
+              <div class="demo-step-desc">Freighter en Stellar testnet. Dirección pública visible; lo que sigue, no.</div>
+            </div>
+            <div class="demo-step">
+              <div class="demo-step-num">PASO 2</div>
+              <div class="demo-step-title">Depositar XLM</div>
+              <div class="demo-step-desc">1-1000 XLM. Recibo secreto generado localmente. 3 firmas en Freighter.</div>
+            </div>
+            <div class="demo-step">
+              <div class="demo-step-num">PASO 3</div>
+              <div class="demo-step-title">Prueba ZK (~30s)</div>
+              <div class="demo-step-desc">snarkjs en WASM, client-side. Groth16 sobre BN254. Sin servidor.</div>
+            </div>
+            <div class="demo-step">
+              <div class="demo-step-num">PASO 4</div>
+              <div class="demo-step-title">Retirar</div>
+              <div class="demo-step-desc">Fondos a cualquier dirección. Nullifier marcado. Nadie vincula depósito con retiro.</div>
+            </div>
+            <div class="demo-step">
+              <div class="demo-step-num">PASO 5</div>
+              <div class="demo-step-title">Auditar</div>
+              <div class="demo-step-desc">Clave privada Curve25519 del DAO descifra notas. Historial visible solo para el auditor.</div>
+            </div>
+          </div>
+          <div class="links-row">
+            <div class="link-card"><strong>URL en vivo</strong>mongli-pool.vercel.app</div>
+            <div class="link-card"><strong>Repo</strong>github.com/ALFA117/MongliPool</div>
+            <div class="link-card"><strong>Tests</strong>18/18 passing · Rust · 3 contratos</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8 — ROADMAP -->
+      <section class="slide">
+        <div class="eyebrow"><span class="slide-tag">Roadmap</span></div>
+        <div class="slide-content">
+          <h2 class="slide-title">De MVP de hackathon a protocolo de producción</h2>
+          <div class="roadmap">
+            <div class="road-item">
+              <div class="road-phase">Fase 1<br/>Ahora</div>
+              <div class="road-content">
+                <div class="road-title">MVP de hackathon (actual)</div>
+                <div class="road-items">Groth16/BN254 on-chain · View key asimétrica · ASP básico · monto variable · testnet</div>
+              </div>
+              <span class="road-status status-done">✓ Listo</span>
+            </div>
+            <div class="road-item">
+              <div class="road-phase">Fase 2<br/>Q3 2025</div>
+              <div class="road-content">
+                <div class="road-title">Seguridad de producción</div>
+                <div class="road-items">Ceremonia MPC pública · Auditoría externa del circuito · View key multisig DAO · Relayer de confianza</div>
+              </div>
+              <span class="road-status status-next">Siguiente</span>
+            </div>
+            <div class="road-item">
+              <div class="road-phase">Fase 3<br/>Q4 2025</div>
+              <div class="road-content">
+                <div class="road-title">Integración con Confidential Tokens (OZ)</div>
+                <div class="road-items">CT como capa 2 de privacidad · Privacidad total: routing + balances · Post-auditoría CT (ago 2025)</div>
+              </div>
+              <span class="road-status status-future">Planificado</span>
+            </div>
+            <div class="road-item">
+              <div class="road-phase">Fase 4<br/>2026</div>
+              <div class="road-content">
+                <div class="road-title">Mainnet y expansión</div>
+                <div class="road-items">Mongli DAO como primer usuario piloto · Multi-asset (USDC, otros SEP-41) · API para otros proyectos de Stellar</div>
+              </div>
+              <span class="road-status status-future">Visión</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9 — EQUIPO -->
+      <section class="slide">
+        <div class="eyebrow"><span class="slide-tag">Equipo</span></div>
+        <div class="team-wrap">
+          <div class="team-card">
+            <div class="team-avatar">A</div>
+            <div class="team-name">- A L F A -</div>
+            <div class="team-dao">Mongli DAO · Founder</div>
+            <div class="team-links">
+              <span class="team-link"><i class="ti ti-brand-instagram"></i>@ALFA_EDG_</span>
+              <span class="team-link"><i class="ti ti-brand-github"></i>ALFA117</span>
+            </div>
+            <div class="team-note">Construido en solitario para Stellar Hacks: ZK 2025 — desde el circuito ZK hasta el frontend, los contratos Soroban, y la criptografía asimétrica.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 10 — CTA -->
+      <section class="slide">
+        <div class="eyebrow"><span class="slide-tag">Cierre</span></div>
+        <div class="cta-wrap">
+          <div class="cta-bg">
+            <div class="cta-title">MongliPool</div>
+            <div class="cta-sub">Privacidad real. Compliance integrado. Verificado on-chain en Stellar. Construido por Mongli DAO.</div>
+            <div class="cta-links">
+              <div class="cta-link">
+                <div class="cta-link-label">Demo en vivo</div>
+                <div class="cta-link-url">mongli-pool.vercel.app</div>
+              </div>
+              <div class="cta-link">
+                <div class="cta-link-label">Repositorio</div>
+                <div class="cta-link-url">github.com/ALFA117/MongliPool</div>
+              </div>
+            </div>
+            <div class="contracts">
+              <div class="contract-row"><span class="contract-name">Privacy Pool</span><span class="contract-id">CAPKM3CC...H4YFI7</span></div>
+              <div class="contract-row"><span class="contract-name">ASP Registry</span><span class="contract-id">CCVH3IBN...QIHX</span></div>
+              <div class="contract-row"><span class="contract-name">Groth16 Verifier</span><span class="contract-id">CAXRVY3I...U5LZ</span></div>
+            </div>
+            <div class="cta-footer">Stellar Hacks: ZK 2025 · Mongli DAO · @ALFA_EDG_</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="nav-btn" id="prevBtn" aria-label="Anterior"><i class="ti ti-chevron-left"></i></button>
+    <div class="dots" id="dots"></div>
+    <button class="nav-btn" id="nextBtn" aria-label="Siguiente"><i class="ti ti-chevron-right"></i></button>
+  </div>
+</div>
+
+<div class="hint"><i class="ti ti-arrows-horizontal"></i> usa las flechas del teclado</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dotsWrap = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  const progressBar = document.getElementById('progressBar');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const total = slides.length;
+  let current = 0;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'dot';
+    dot.setAttribute('aria-label', 'Ir a slide ' + (i + 1));
+    dot.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(dot);
+  });
+  const dots = document.querySelectorAll('.dot');
+
+  function render(){
+    slides.forEach((s, i) => {
+      s.classList.remove('active', 'prev');
+      if(i === current) s.classList.add('active');
+      else if(i < current) s.classList.add('prev');
+    });
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + total;
+    progressBar.style.width = ((current + 1) / total * 100) + '%';
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+  }
+
+  function goTo(i){
+    current = Math.max(0, Math.min(total - 1, i));
+    render();
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowRight' || e.key === ' ') goTo(current + 1);
+    if(e.key === 'ArrowLeft') goTo(current - 1);
+    if(e.key === 'Home') goTo(0);
+    if(e.key === 'End') goTo(total - 1);
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    if(Math.abs(dx) > 50){ dx < 0 ? goTo(current + 1) : goTo(current - 1); }
+  });
+
+  render();
+</script>
+
+</body>
+</html>
