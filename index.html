@@ -249,16 +249,26 @@
     display:flex; flex-direction:column; align-items:center; gap:0.9rem;
     max-width:380px;
   }
-  .team-avatar{
-    width:68px; height:68px; border-radius:50%;
+  .team-avatar-ring{
+    width:104px; height:104px; border-radius:50%; padding:3px;
     background:linear-gradient(135deg,var(--accent-green),var(--accent-blue));
-    display:flex; align-items:center; justify-content:center;
-    font-size:22px; font-weight:700; color:#03150f;
+    box-shadow:0 10px 32px -8px rgba(5,213,161,0.45);
+  }
+  .team-avatar{
+    width:100%; height:100%; border-radius:50%;
+    display:block; object-fit:cover; object-position:50% 38%;
+    border:3px solid var(--navy-1);
   }
   .team-name{ font-size:18px; font-weight:700; letter-spacing:0.12em; }
   .team-dao{ font-size:13px; color:var(--accent-green); }
-  .team-links{ display:flex; gap:0.7rem; margin-top:0.2rem; }
-  .team-link{ font-size:12px; color:var(--text-secondary); padding:5px 13px; border:1px solid var(--border-strong); border-radius:20px; display:flex; align-items:center; gap:4px; }
+  .team-links{ display:flex; gap:0.6rem; margin-top:0.2rem; flex-wrap:wrap; justify-content:center; }
+  .team-link{
+    font-size:12px; color:var(--text-secondary); padding:5px 13px;
+    border:1px solid var(--border-strong); border-radius:20px;
+    display:flex; align-items:center; gap:4px;
+    text-decoration:none; transition:all 0.2s; cursor:pointer;
+  }
+  .team-link:hover{ color:var(--accent-green); border-color:var(--accent-green); background:rgba(5,213,161,0.06); }
   .team-note{ margin-top:0.4rem; font-size:12px; color:var(--text-muted); text-align:center; max-width:300px; line-height:1.65; }
 
   /* Slide 10 — CTA */
@@ -642,12 +652,16 @@
         <div class="eyebrow"><span class="slide-tag" data-i18n="s9.tag"></span></div>
         <div class="team-wrap">
           <div class="team-card">
-            <div class="team-avatar">A</div>
+            <div class="team-avatar-ring">
+              <img class="team-avatar" src="img/alfa.jpg" alt="ALFA — Mongli DAO founder">
+            </div>
             <div class="team-name">- A L F A -</div>
             <div class="team-dao" data-i18n="s9.dao"></div>
             <div class="team-links">
-              <span class="team-link"><i class="ti ti-brand-instagram"></i>@ALFA_EDG_</span>
-              <span class="team-link"><i class="ti ti-brand-github"></i>ALFA117</span>
+              <a class="team-link" href="https://x.com/ALFA_EDG" target="_blank" rel="noopener"><i class="ti ti-brand-x"></i>@ALFA_EDG</a>
+              <a class="team-link" href="https://www.linkedin.com/in/edgar-lopez-baeza-6b5a22353/" target="_blank" rel="noopener"><i class="ti ti-brand-linkedin"></i>LinkedIn</a>
+              <a class="team-link" href="https://instagram.com/ALFA_EDG_" target="_blank" rel="noopener"><i class="ti ti-brand-instagram"></i>@ALFA_EDG_</a>
+              <a class="team-link" href="https://github.com/ALFA117" target="_blank" rel="noopener"><i class="ti ti-brand-github"></i>ALFA117</a>
             </div>
             <div class="team-note" data-i18n="s9.note"></div>
           </div>
