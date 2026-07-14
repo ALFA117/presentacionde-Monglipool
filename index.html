@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MongliPool — Pitch Deck</title>
-<meta name="description" content="MongliPool: el primer privacy pool con cumplimiento regulatorio nativo en Stellar. Criptografía ZK real, verificada on-chain.">
+<title id="pageTitle">MongliPool — Pitch Deck</title>
+<meta id="pageDesc" name="description" content="MongliPool: the first privacy pool with native regulatory compliance on Stellar. Real ZK cryptography, verified on-chain.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a1128'/%3E%3Cpath d='M6 22 L6 12 Q6 10 8 10 L10 10 L16 17 L22 10 L24 10 Q26 10 26 12 L26 22' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Cpath d='M16 4 L17 7 L20 6.2 L18 8.2 L20.5 9.5 L17.5 9.5 L16 13 L14.5 9.5 L11.5 9.5 L14 8.2 L12 6.2 L15 7 Z' fill='%2300F5D4'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,17 +57,32 @@
     justify-content:space-between;
     padding:1.1rem 1.75rem 0.9rem;
     flex-shrink:0;
+    gap:1rem;
   }
-  .brand{ display:flex; align-items:center; gap:0.6rem; }
+  .brand{ display:flex; align-items:center; gap:0.6rem; min-width:0; }
   .brand-mark{
-    width:26px; height:26px; border-radius:8px;
+    width:26px; height:26px; border-radius:8px; flex-shrink:0;
     background:linear-gradient(135deg,var(--accent-green),var(--accent-blue));
     display:flex; align-items:center; justify-content:center;
   }
   .brand-mark svg{ width:16px; height:16px; }
-  .brand-name{ font-size:13px; font-weight:600; letter-spacing:0.02em; color:var(--text-primary); }
-  .brand-tag{ font-size:11px; color:var(--text-muted); font-family:var(--font-mono); margin-left:0.35rem; }
+  .brand-name{ font-size:13px; font-weight:600; letter-spacing:0.02em; color:var(--text-primary); white-space:nowrap; }
+  .brand-tag{ font-size:11px; color:var(--text-muted); font-family:var(--font-mono); margin-left:0.35rem; white-space:nowrap; }
+  .topbar-right{ display:flex; align-items:center; gap:1rem; flex-shrink:0; }
   .counter{ font-size:12px; color:var(--text-muted); font-family:var(--font-mono); }
+
+  .lang-toggle{
+    display:flex; align-items:center; background:var(--surface-1);
+    border:1px solid var(--border-strong); border-radius:20px; padding:2px;
+  }
+  .lang-btn{
+    font-family:var(--font-sans); font-size:11px; font-weight:600;
+    color:var(--text-muted); background:transparent; border:none;
+    padding:4px 11px; border-radius:16px; cursor:pointer; transition:all 0.2s;
+  }
+  .lang-btn.active{ background:linear-gradient(135deg,var(--accent-green),var(--accent-blue)); color:#03150f; }
+  .lang-btn:not(.active):hover{ color:var(--text-primary); }
+
   .progress-track{
     position:absolute; top:0; left:0; right:0; height:2px; background:transparent;
   }
@@ -305,6 +320,7 @@
     .bench-table th, .bench-table td{ padding:0.5rem 0.4rem; }
     .hint{ display:none; }
     .cta-links{ grid-template-columns:1fr; }
+    .brand-tag{ display:none; }
   }
 </style>
 </head>
@@ -323,7 +339,13 @@
       <span class="brand-name">MongliPool</span>
       <span class="brand-tag">Stellar Hacks: ZK 2025</span>
     </div>
-    <span class="counter" id="counter">01 / 10</span>
+    <div class="topbar-right">
+      <div class="lang-toggle" id="langToggle" role="group" aria-label="Language selector">
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="es">ES</button>
+      </div>
+      <span class="counter" id="counter">01 / 10</span>
+    </div>
   </div>
 
   <div class="viewport">
@@ -331,7 +353,7 @@
 
       <!-- SLIDE 1 — HERO -->
       <section class="slide">
-        <div class="eyebrow"><span class="slide-tag">Portada</span></div>
+        <div class="eyebrow"><span class="slide-tag" data-i18n="s1.tag"></span></div>
         <div class="hero">
           <div class="hero-logo">
             <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -341,7 +363,7 @@
             </svg>
           </div>
           <div class="hero-title">MongliPool</div>
-          <div class="hero-sub">El primer privacy pool con cumplimiento regulatorio nativo en Stellar — criptografía ZK real, verificada on-chain.</div>
+          <div class="hero-sub" data-i18n="s1.sub"></div>
           <div class="hero-badges">
             <span class="badge badge-green">Groth16 / BN254</span>
             <span class="badge badge-blue">Stellar Testnet</span>
@@ -351,99 +373,99 @@
         </div>
       </section>
 
-      <!-- SLIDE 2 — PROBLEMA -->
+      <!-- SLIDE 2 — PROBLEM -->
       <section class="slide">
-        <div class="eyebrow"><span class="slide-tag">El problema</span></div>
+        <div class="eyebrow"><span class="slide-tag" data-i18n="s2.tag"></span></div>
         <div class="slide-content">
-          <h2 class="slide-title">En blockchain, la privacidad y el cumplimiento no coexisten</h2>
+          <h2 class="slide-title" data-i18n="s2.title"></h2>
           <div class="problem-grid">
             <div class="prob-card prob-bad">
               <div class="prob-icon"><i class="ti ti-eye" style="color:var(--text-danger)"></i></div>
-              <div class="prob-title">Transacciones públicas</div>
-              <div class="prob-desc">Cualquier persona puede ver quién envió dinero, cuánto, y cuándo. Zero privacidad por defecto en Stellar.</div>
+              <div class="prob-title" data-i18n="s2.p1.title"></div>
+              <div class="prob-desc" data-i18n="s2.p1.desc"></div>
             </div>
             <div class="prob-card prob-bad">
               <div class="prob-icon"><i class="ti ti-ban" style="color:var(--text-danger)"></i></div>
-              <div class="prob-title">Mixers sin control</div>
-              <div class="prob-desc">Las soluciones actuales (mixers/tumblers) ofrecen privacidad pero sin cumplimiento regulatorio — facilitando lavado de dinero.</div>
+              <div class="prob-title" data-i18n="s2.p2.title"></div>
+              <div class="prob-desc" data-i18n="s2.p2.desc"></div>
             </div>
             <div class="prob-card prob-bad">
               <div class="prob-icon"><i class="ti ti-building-bank" style="color:var(--text-danger)"></i></div>
-              <div class="prob-title">DAOs y empresas expuestos</div>
-              <div class="prob-desc">Tesoreros y pagadores en Stellar deben elegir entre privacidad o compliance. No hay una tercera opción.</div>
+              <div class="prob-title" data-i18n="s2.p3.title"></div>
+              <div class="prob-desc" data-i18n="s2.p3.desc"></div>
             </div>
             <div class="prob-card prob-good">
               <div class="prob-icon"><i class="ti ti-shield-check" style="color:var(--accent-green)"></i></div>
-              <div class="prob-title">La oportunidad</div>
-              <div class="prob-desc">ZK proofs permiten demostrar legitimidad sin revelar detalles — el ingrediente que faltaba para tener ambas cosas.</div>
+              <div class="prob-title" data-i18n="s2.p4.title"></div>
+              <div class="prob-desc" data-i18n="s2.p4.desc"></div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 3 — SOLUCIÓN -->
+      <!-- SLIDE 3 — SOLUTION -->
       <section class="slide">
-        <div class="eyebrow"><span class="slide-tag">La solución</span></div>
+        <div class="eyebrow"><span class="slide-tag" data-i18n="s3.tag"></span></div>
         <div class="slide-content">
-          <h2 class="slide-title">MongliPool: privacidad + compliance en 3 pasos</h2>
-          <p class="tagline">"Depositas por una puerta, retiras por otra. Nadie sabe que son tuyas — pero el auditor puede verificarlo."</p>
+          <h2 class="slide-title" data-i18n="s3.title"></h2>
+          <p class="tagline" data-i18n="s3.tagline"></p>
           <div class="steps">
             <div class="step">
               <div class="step-num">01</div>
-              <div class="step-title">Depositar</div>
-              <div class="step-desc">Tu wallet genera un commitment hash + recibo secreto. Los fondos entran al pool. Nadie sabe quién depositó.</div>
+              <div class="step-title" data-i18n="s3.step1.title"></div>
+              <div class="step-desc" data-i18n="s3.step1.desc"></div>
               <span class="step-arrow"><i class="ti ti-chevron-right"></i></span>
             </div>
             <div class="step">
               <div class="step-num">02</div>
-              <div class="step-title">Prueba ZK</div>
-              <div class="step-desc">Tu dispositivo genera una prueba matemática (21,781 constraints) que demuestra que eres dueño de un depósito, sin decir cuál.</div>
+              <div class="step-title" data-i18n="s3.step2.title"></div>
+              <div class="step-desc" data-i18n="s3.step2.desc"></div>
               <span class="step-arrow"><i class="ti ti-chevron-right"></i></span>
             </div>
             <div class="step">
               <div class="step-num">03</div>
-              <div class="step-title">Retirar en privado</div>
-              <div class="step-desc">Los fondos llegan a cualquier dirección. Nadie puede vincular el retiro con el depósito original.</div>
+              <div class="step-title" data-i18n="s3.step3.title"></div>
+              <div class="step-desc" data-i18n="s3.step3.desc"></div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 4 — TECNOLOGÍA -->
+      <!-- SLIDE 4 — TECH -->
       <section class="slide">
-        <div class="eyebrow"><span class="slide-tag">Stack técnico</span></div>
+        <div class="eyebrow"><span class="slide-tag" data-i18n="s4.tag"></span></div>
         <div class="slide-content">
-          <h2 class="slide-title">Criptografía real — no simulaciones</h2>
+          <h2 class="slide-title" data-i18n="s4.title"></h2>
           <div class="tech-grid">
             <div class="tech-card">
-              <div class="tech-label">Circuito ZK</div>
+              <div class="tech-label" data-i18n="s4.card1.label"></div>
               <div class="tech-value">Groth16 / BN254</div>
-              <div class="tech-sub">21,781 constraints · depth 20 · Circom 2</div>
+              <div class="tech-sub" data-i18n="s4.card1.sub"></div>
             </div>
             <div class="tech-card">
-              <div class="tech-label">Verificación on-chain</div>
+              <div class="tech-label" data-i18n="s4.card2.label"></div>
               <div class="tech-value">Soroban SDK v25</div>
-              <div class="tech-sub">BN254 host functions nativas · Protocolo 26</div>
+              <div class="tech-sub" data-i18n="s4.card2.sub"></div>
             </div>
             <div class="tech-card">
-              <div class="tech-label">Contratos Soroban</div>
-              <div class="tech-value">3 contratos · 18/18 tests</div>
+              <div class="tech-label" data-i18n="s4.card3.label"></div>
+              <div class="tech-value" data-i18n="s4.card3.value"></div>
               <div class="tech-sub">groth16-verifier · privacy-pool · asp-registry</div>
             </div>
             <div class="tech-card">
-              <div class="tech-label">View key</div>
-              <div class="tech-value">NaCl box asimétrico</div>
-              <div class="tech-sub">Curve25519 · keypair efímero por depósito</div>
+              <div class="tech-label" data-i18n="s4.card4.label"></div>
+              <div class="tech-value" data-i18n="s4.card4.value"></div>
+              <div class="tech-sub" data-i18n="s4.card4.sub"></div>
             </div>
             <div class="tech-card">
-              <div class="tech-label">Proof generation</div>
+              <div class="tech-label" data-i18n="s4.card5.label"></div>
               <div class="tech-value">Client-side WASM</div>
-              <div class="tech-sub">snarkjs en el browser · sin servidor · ~30s</div>
+              <div class="tech-sub" data-i18n="s4.card5.sub"></div>
             </div>
             <div class="tech-card">
-              <div class="tech-label">Frontend</div>
+              <div class="tech-label" data-i18n="s4.card6.label"></div>
               <div class="tech-value">React + Vite + TS</div>
-              <div class="tech-sub">TailwindCSS · stellar-wallets-kit · i18n ES/EN</div>
+              <div class="tech-sub" data-i18n="s4.card6.sub"></div>
             </div>
           </div>
         </div>
@@ -451,82 +473,82 @@
 
       <!-- SLIDE 5 — COMPLIANCE -->
       <section class="slide">
-        <div class="eyebrow"><span class="slide-tag">Compliance</span></div>
+        <div class="eyebrow"><span class="slide-tag" data-i18n="s5.tag"></span></div>
         <div class="slide-content">
-          <h2 class="slide-title">Lo que nos diferencia: compliance integrado desde el diseño</h2>
+          <h2 class="slide-title" data-i18n="s5.title"></h2>
           <div class="compliance-row">
             <div class="comp-card">
               <div class="comp-icon"><i class="ti ti-list-check"></i></div>
-              <div class="comp-title">ASP (Authorized Set Provider)</div>
-              <div class="comp-desc">Mongli DAO mantiene una lista de commitments aprobados. Solo usuarios legítimos pueden retirar.</div>
+              <div class="comp-title" data-i18n="s5.c1.title"></div>
+              <div class="comp-desc" data-i18n="s5.c1.desc"></div>
             </div>
             <div class="comp-card">
               <div class="comp-icon"><i class="ti ti-key"></i></div>
-              <div class="comp-title">View key asimétrica</div>
-              <div class="comp-desc">El auditor del DAO usa su clave privada Curve25519 para descifrar el historial. El público no puede.</div>
+              <div class="comp-title" data-i18n="s5.c2.title"></div>
+              <div class="comp-desc" data-i18n="s5.c2.desc"></div>
             </div>
             <div class="comp-card">
               <div class="comp-icon"><i class="ti ti-shield-lock"></i></div>
-              <div class="comp-title">Doble Merkle proof</div>
-              <div class="comp-desc">Cada retiro prueba pertenencia al pool tree Y al ASP tree. Si no estás aprobado, la prueba ZK falla.</div>
+              <div class="comp-title" data-i18n="s5.c3.title"></div>
+              <div class="comp-desc" data-i18n="s5.c3.desc"></div>
             </div>
           </div>
           <div class="analogy">
-            <p><strong>Analogía simple:</strong> MongliPool es como un banco que procesa pagos en efectivo anónimos, pero donde un auditor con llave maestra puede revisar los registros si un regulador lo requiere. El público no ve nada; el regulador lo puede ver todo con autorización.</p>
+            <p data-i18n-html="s5.analogy"></p>
           </div>
         </div>
       </section>
 
       <!-- SLIDE 6 — BENCHMARKING -->
       <section class="slide">
-        <div class="eyebrow"><span class="slide-tag">Comparativa</span></div>
+        <div class="eyebrow"><span class="slide-tag" data-i18n="s6.tag"></span></div>
         <div class="slide-content">
-          <h2 class="slide-title">MongliPool vs. alternativas existentes</h2>
+          <h2 class="slide-title" data-i18n="s6.title"></h2>
           <table class="bench-table">
             <thead>
               <tr>
-                <th>Característica</th>
+                <th data-i18n="s6.th1"></th>
                 <th>Tornado Cash</th>
-                <th>Mixers tradicionales</th>
+                <th data-i18n="s6.th3"></th>
                 <th style="color:var(--accent-green)">MongliPool</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Privacidad de routing</td>
+                <td data-i18n="s6.row1"></td>
                 <td class="check"><i class="ti ti-check"></i></td>
                 <td class="check"><i class="ti ti-check"></i></td>
                 <td class="us check"><i class="ti ti-check"></i></td>
               </tr>
               <tr>
-                <td>Compliance / ASP integrado</td>
+                <td data-i18n="s6.row2"></td>
                 <td class="cross"><i class="ti ti-x"></i></td>
                 <td class="cross"><i class="ti ti-x"></i></td>
                 <td class="us check"><i class="ti ti-check"></i></td>
               </tr>
               <tr>
-                <td>Auditoría selectiva (view key)</td>
+                <td data-i18n="s6.row3"></td>
                 <td class="cross"><i class="ti ti-x"></i></td>
                 <td class="cross"><i class="ti ti-x"></i></td>
                 <td class="us check"><i class="ti ti-check"></i></td>
               </tr>
               <tr>
-                <td>Verificación ZK on-chain en Stellar</td>
+                <td data-i18n="s6.row4"></td>
                 <td class="cross"><i class="ti ti-x"></i></td>
                 <td class="cross"><i class="ti ti-x"></i></td>
                 <td class="us check"><i class="ti ti-check"></i></td>
               </tr>
               <tr>
-                <td>Proof generation en browser</td>
+                <td data-i18n="s6.row5"></td>
                 <td class="partial"><i class="ti ti-minus"></i></td>
                 <td class="cross"><i class="ti ti-x"></i></td>
                 <td class="us check"><i class="ti ti-check"></i></td>
               </tr>
               <tr>
-                <td>Auditoría de seguridad externa</td>
+                <td data-i18n="s6.row6"></td>
                 <td class="check"><i class="ti ti-check"></i></td>
                 <td class="partial"><i class="ti ti-minus"></i></td>
-                <td class="us cross"><i class="ti ti-x"></i> (pendiente)</td>
+                <td class="us cross"><i class="ti ti-x"></i> <span data-i18n="s6.pending"></span></td>
               </tr>
             </tbody>
           </table>
@@ -535,117 +557,117 @@
 
       <!-- SLIDE 7 — DEMO -->
       <section class="slide">
-        <div class="eyebrow"><span class="slide-tag">Demo en vivo</span></div>
+        <div class="eyebrow"><span class="slide-tag" data-i18n="s7.tag"></span></div>
         <div class="slide-content">
-          <h2 class="slide-title">Flujo end-to-end verificado en testnet</h2>
+          <h2 class="slide-title" data-i18n="s7.title"></h2>
           <div class="demo-flow">
             <div class="demo-step">
-              <div class="demo-step-num">PASO 1</div>
-              <div class="demo-step-title">Conectar wallet</div>
-              <div class="demo-step-desc">Freighter en Stellar testnet. Dirección pública visible; lo que sigue, no.</div>
+              <div class="demo-step-num" data-i18n="s7.step1.num"></div>
+              <div class="demo-step-title" data-i18n="s7.step1.title"></div>
+              <div class="demo-step-desc" data-i18n="s7.step1.desc"></div>
             </div>
             <div class="demo-step">
-              <div class="demo-step-num">PASO 2</div>
-              <div class="demo-step-title">Depositar XLM</div>
-              <div class="demo-step-desc">1-1000 XLM. Recibo secreto generado localmente. 3 firmas en Freighter.</div>
+              <div class="demo-step-num" data-i18n="s7.step2.num"></div>
+              <div class="demo-step-title" data-i18n="s7.step2.title"></div>
+              <div class="demo-step-desc" data-i18n="s7.step2.desc"></div>
             </div>
             <div class="demo-step">
-              <div class="demo-step-num">PASO 3</div>
-              <div class="demo-step-title">Prueba ZK (~30s)</div>
-              <div class="demo-step-desc">snarkjs en WASM, client-side. Groth16 sobre BN254. Sin servidor.</div>
+              <div class="demo-step-num" data-i18n="s7.step3.num"></div>
+              <div class="demo-step-title" data-i18n="s7.step3.title"></div>
+              <div class="demo-step-desc" data-i18n="s7.step3.desc"></div>
             </div>
             <div class="demo-step">
-              <div class="demo-step-num">PASO 4</div>
-              <div class="demo-step-title">Retirar</div>
-              <div class="demo-step-desc">Fondos a cualquier dirección. Nullifier marcado. Nadie vincula depósito con retiro.</div>
+              <div class="demo-step-num" data-i18n="s7.step4.num"></div>
+              <div class="demo-step-title" data-i18n="s7.step4.title"></div>
+              <div class="demo-step-desc" data-i18n="s7.step4.desc"></div>
             </div>
             <div class="demo-step">
-              <div class="demo-step-num">PASO 5</div>
-              <div class="demo-step-title">Auditar</div>
-              <div class="demo-step-desc">Clave privada Curve25519 del DAO descifra notas. Historial visible solo para el auditor.</div>
+              <div class="demo-step-num" data-i18n="s7.step5.num"></div>
+              <div class="demo-step-title" data-i18n="s7.step5.title"></div>
+              <div class="demo-step-desc" data-i18n="s7.step5.desc"></div>
             </div>
           </div>
           <div class="links-row">
-            <div class="link-card"><strong>URL en vivo</strong>mongli-pool.vercel.app</div>
-            <div class="link-card"><strong>Repo</strong>github.com/ALFA117/MongliPool</div>
-            <div class="link-card"><strong>Tests</strong>18/18 passing · Rust · 3 contratos</div>
+            <div class="link-card"><strong data-i18n="s7.link1.label"></strong>mongli-pool.vercel.app</div>
+            <div class="link-card"><strong data-i18n="s7.link2.label"></strong>github.com/ALFA117/MongliPool</div>
+            <div class="link-card"><strong data-i18n="s7.link3.label"></strong><span data-i18n="s7.link3.value"></span></div>
           </div>
         </div>
       </section>
 
       <!-- SLIDE 8 — ROADMAP -->
       <section class="slide">
-        <div class="eyebrow"><span class="slide-tag">Roadmap</span></div>
+        <div class="eyebrow"><span class="slide-tag" data-i18n="s8.tag"></span></div>
         <div class="slide-content">
-          <h2 class="slide-title">De MVP de hackathon a protocolo de producción</h2>
+          <h2 class="slide-title" data-i18n="s8.title"></h2>
           <div class="roadmap">
             <div class="road-item">
-              <div class="road-phase">Fase 1<br/>Ahora</div>
+              <div class="road-phase" data-i18n-html="s8.item1.phase"></div>
               <div class="road-content">
-                <div class="road-title">MVP de hackathon (actual)</div>
-                <div class="road-items">Groth16/BN254 on-chain · View key asimétrica · ASP básico · monto variable · testnet</div>
+                <div class="road-title" data-i18n="s8.item1.title"></div>
+                <div class="road-items" data-i18n="s8.item1.items"></div>
               </div>
-              <span class="road-status status-done">✓ Listo</span>
+              <span class="road-status status-done" data-i18n="s8.item1.status"></span>
             </div>
             <div class="road-item">
-              <div class="road-phase">Fase 2<br/>Q3 2025</div>
+              <div class="road-phase" data-i18n-html="s8.item2.phase"></div>
               <div class="road-content">
-                <div class="road-title">Seguridad de producción</div>
-                <div class="road-items">Ceremonia MPC pública · Auditoría externa del circuito · View key multisig DAO · Relayer de confianza</div>
+                <div class="road-title" data-i18n="s8.item2.title"></div>
+                <div class="road-items" data-i18n="s8.item2.items"></div>
               </div>
-              <span class="road-status status-next">Siguiente</span>
+              <span class="road-status status-next" data-i18n="s8.item2.status"></span>
             </div>
             <div class="road-item">
-              <div class="road-phase">Fase 3<br/>Q4 2025</div>
+              <div class="road-phase" data-i18n-html="s8.item3.phase"></div>
               <div class="road-content">
-                <div class="road-title">Integración con Confidential Tokens (OZ)</div>
-                <div class="road-items">CT como capa 2 de privacidad · Privacidad total: routing + balances · Post-auditoría CT (ago 2025)</div>
+                <div class="road-title" data-i18n="s8.item3.title"></div>
+                <div class="road-items" data-i18n="s8.item3.items"></div>
               </div>
-              <span class="road-status status-future">Planificado</span>
+              <span class="road-status status-future" data-i18n="s8.item3.status"></span>
             </div>
             <div class="road-item">
-              <div class="road-phase">Fase 4<br/>2026</div>
+              <div class="road-phase" data-i18n-html="s8.item4.phase"></div>
               <div class="road-content">
-                <div class="road-title">Mainnet y expansión</div>
-                <div class="road-items">Mongli DAO como primer usuario piloto · Multi-asset (USDC, otros SEP-41) · API para otros proyectos de Stellar</div>
+                <div class="road-title" data-i18n="s8.item4.title"></div>
+                <div class="road-items" data-i18n="s8.item4.items"></div>
               </div>
-              <span class="road-status status-future">Visión</span>
+              <span class="road-status status-future" data-i18n="s8.item4.status"></span>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 9 — EQUIPO -->
+      <!-- SLIDE 9 — TEAM -->
       <section class="slide">
-        <div class="eyebrow"><span class="slide-tag">Equipo</span></div>
+        <div class="eyebrow"><span class="slide-tag" data-i18n="s9.tag"></span></div>
         <div class="team-wrap">
           <div class="team-card">
             <div class="team-avatar">A</div>
             <div class="team-name">- A L F A -</div>
-            <div class="team-dao">Mongli DAO · Founder</div>
+            <div class="team-dao" data-i18n="s9.dao"></div>
             <div class="team-links">
               <span class="team-link"><i class="ti ti-brand-instagram"></i>@ALFA_EDG_</span>
               <span class="team-link"><i class="ti ti-brand-github"></i>ALFA117</span>
             </div>
-            <div class="team-note">Construido en solitario para Stellar Hacks: ZK 2025 — desde el circuito ZK hasta el frontend, los contratos Soroban, y la criptografía asimétrica.</div>
+            <div class="team-note" data-i18n="s9.note"></div>
           </div>
         </div>
       </section>
 
       <!-- SLIDE 10 — CTA -->
       <section class="slide">
-        <div class="eyebrow"><span class="slide-tag">Cierre</span></div>
+        <div class="eyebrow"><span class="slide-tag" data-i18n="s10.tag"></span></div>
         <div class="cta-wrap">
           <div class="cta-bg">
             <div class="cta-title">MongliPool</div>
-            <div class="cta-sub">Privacidad real. Compliance integrado. Verificado on-chain en Stellar. Construido por Mongli DAO.</div>
+            <div class="cta-sub" data-i18n="s10.sub"></div>
             <div class="cta-links">
               <div class="cta-link">
-                <div class="cta-link-label">Demo en vivo</div>
+                <div class="cta-link-label" data-i18n="s10.link1.label"></div>
                 <div class="cta-link-url">mongli-pool.vercel.app</div>
               </div>
               <div class="cta-link">
-                <div class="cta-link-label">Repositorio</div>
+                <div class="cta-link-label" data-i18n="s10.link2.label"></div>
                 <div class="cta-link-url">github.com/ALFA117/MongliPool</div>
               </div>
             </div>
@@ -663,15 +685,227 @@
   </div>
 
   <div class="controls">
-    <button class="nav-btn" id="prevBtn" aria-label="Anterior"><i class="ti ti-chevron-left"></i></button>
+    <button class="nav-btn" id="prevBtn"><i class="ti ti-chevron-left"></i></button>
     <div class="dots" id="dots"></div>
-    <button class="nav-btn" id="nextBtn" aria-label="Siguiente"><i class="ti ti-chevron-right"></i></button>
+    <button class="nav-btn" id="nextBtn"><i class="ti ti-chevron-right"></i></button>
   </div>
 </div>
 
-<div class="hint"><i class="ti ti-arrows-horizontal"></i> usa las flechas del teclado</div>
+<div class="hint"><i class="ti ti-arrows-horizontal"></i> <span id="hintText"></span></div>
 
 <script>
+  const translations = {
+    en: {
+      "meta.title": "MongliPool — Pitch Deck",
+      "meta.desc": "MongliPool: the first privacy pool with native regulatory compliance on Stellar. Real ZK cryptography, verified on-chain.",
+      "hint": "use the keyboard arrows",
+      "aria.prev": "Previous", "aria.next": "Next", "aria.dot": "Go to slide",
+      "s1.tag": "Cover",
+      "s1.sub": "The first privacy pool with native regulatory compliance on Stellar — real ZK cryptography, verified on-chain.",
+      "s2.tag": "The problem",
+      "s2.title": "In blockchain, privacy and compliance don't coexist",
+      "s2.p1.title": "Public transactions",
+      "s2.p1.desc": "Anyone can see who sent money, how much, and when. Zero privacy by default on Stellar.",
+      "s2.p2.title": "Uncontrolled mixers",
+      "s2.p2.desc": "Current solutions (mixers/tumblers) offer privacy but no regulatory compliance — enabling money laundering.",
+      "s2.p3.title": "DAOs and companies exposed",
+      "s2.p3.desc": "Treasurers and payers on Stellar must choose between privacy or compliance. There's no third option.",
+      "s2.p4.title": "The opportunity",
+      "s2.p4.desc": "ZK proofs let you prove legitimacy without revealing details — the missing ingredient to have both.",
+      "s3.tag": "The solution",
+      "s3.title": "MongliPool: privacy + compliance in 3 steps",
+      "s3.tagline": "“You deposit through one door, withdraw through another. No one knows they're yours — but the auditor can verify it.”",
+      "s3.step1.title": "Deposit",
+      "s3.step1.desc": "Your wallet generates a commitment hash + secret note. Funds enter the pool. No one knows who deposited.",
+      "s3.step2.title": "ZK proof",
+      "s3.step2.desc": "Your device generates a mathematical proof (21,781 constraints) that shows you own a deposit, without revealing which one.",
+      "s3.step3.title": "Withdraw privately",
+      "s3.step3.desc": "Funds arrive at any address. No one can link the withdrawal to the original deposit.",
+      "s4.tag": "Tech stack",
+      "s4.title": "Real cryptography — not simulations",
+      "s4.card1.label": "ZK circuit",
+      "s4.card1.sub": "21,781 constraints · depth 20 · Circom 2",
+      "s4.card2.label": "On-chain verification",
+      "s4.card2.sub": "Native BN254 host functions · Protocol 26",
+      "s4.card3.label": "Soroban contracts",
+      "s4.card3.value": "3 contracts · 18/18 tests",
+      "s4.card4.label": "View key",
+      "s4.card4.value": "Asymmetric NaCl box",
+      "s4.card4.sub": "Curve25519 · ephemeral keypair per deposit",
+      "s4.card5.label": "Proof generation",
+      "s4.card5.sub": "snarkjs in the browser · no server · ~30s",
+      "s4.card6.label": "Frontend",
+      "s4.card6.sub": "TailwindCSS · stellar-wallets-kit · i18n EN/ES",
+      "s5.tag": "Compliance",
+      "s5.title": "What sets us apart: compliance built in by design",
+      "s5.c1.title": "ASP (Authorized Set Provider)",
+      "s5.c1.desc": "Mongli DAO maintains a list of approved commitments. Only legitimate users can withdraw.",
+      "s5.c2.title": "Asymmetric view key",
+      "s5.c2.desc": "The DAO's auditor uses their private Curve25519 key to decrypt history. The public can't.",
+      "s5.c3.title": "Dual Merkle proof",
+      "s5.c3.desc": "Every withdrawal proves membership in both the pool tree and the ASP tree. If you're not approved, the ZK proof fails.",
+      "s5.analogy": "<strong>Simple analogy:</strong> MongliPool is like a bank that processes anonymous cash payments, but where an auditor with a master key can review the records if a regulator requires it. The public sees nothing; the regulator can see everything with authorization.",
+      "s6.tag": "Benchmark",
+      "s6.title": "MongliPool vs. existing alternatives",
+      "s6.th1": "Feature",
+      "s6.th3": "Traditional mixers",
+      "s6.row1": "Routing privacy",
+      "s6.row2": "Integrated compliance / ASP",
+      "s6.row3": "Selective audit (view key)",
+      "s6.row4": "On-chain ZK verification on Stellar",
+      "s6.row5": "Browser-based proof generation",
+      "s6.row6": "External security audit",
+      "s6.pending": "(pending)",
+      "s7.tag": "Live demo",
+      "s7.title": "End-to-end flow verified on testnet",
+      "s7.step1.num": "STEP 1", "s7.step1.title": "Connect wallet",
+      "s7.step1.desc": "Freighter on Stellar testnet. Public address visible; what follows, isn't.",
+      "s7.step2.num": "STEP 2", "s7.step2.title": "Deposit XLM",
+      "s7.step2.desc": "1-1000 XLM. Secret note generated locally. 3 signatures in Freighter.",
+      "s7.step3.num": "STEP 3", "s7.step3.title": "ZK proof (~30s)",
+      "s7.step3.desc": "snarkjs in WASM, client-side. Groth16 over BN254. No server.",
+      "s7.step4.num": "STEP 4", "s7.step4.title": "Withdraw",
+      "s7.step4.desc": "Funds arrive at any address. Nullifier marked. No one links deposit to withdrawal.",
+      "s7.step5.num": "STEP 5", "s7.step5.title": "Audit",
+      "s7.step5.desc": "DAO's private Curve25519 key decrypts notes. History visible only to the auditor.",
+      "s7.link1.label": "Live URL",
+      "s7.link2.label": "Repo",
+      "s7.link3.label": "Tests",
+      "s7.link3.value": "18/18 passing · Rust · 3 contracts",
+      "s8.tag": "Roadmap",
+      "s8.title": "From hackathon MVP to production protocol",
+      "s8.item1.phase": "Phase 1<br/>Now",
+      "s8.item1.title": "Hackathon MVP (current)",
+      "s8.item1.items": "On-chain Groth16/BN254 · Asymmetric view key · Basic ASP · variable amount · testnet",
+      "s8.item1.status": "✓ Done",
+      "s8.item2.phase": "Phase 2<br/>Q3 2025",
+      "s8.item2.title": "Production security",
+      "s8.item2.items": "Public MPC ceremony · External circuit audit · DAO multisig view key · Trusted relayer",
+      "s8.item2.status": "Next",
+      "s8.item3.phase": "Phase 3<br/>Q4 2025",
+      "s8.item3.title": "Confidential Tokens (OZ) integration",
+      "s8.item3.items": "CT as a second privacy layer · Full privacy: routing + balances · Post-CT audit (Aug 2025)",
+      "s8.item3.status": "Planned",
+      "s8.item4.phase": "Phase 4<br/>2026",
+      "s8.item4.title": "Mainnet and expansion",
+      "s8.item4.items": "Mongli DAO as first pilot user · Multi-asset (USDC, other SEP-41) · API for other Stellar projects",
+      "s8.item4.status": "Vision",
+      "s9.tag": "Team",
+      "s9.dao": "Mongli DAO · Founder",
+      "s9.note": "Built solo for Stellar Hacks: ZK 2025 — from the ZK circuit to the frontend, the Soroban contracts, and the asymmetric cryptography.",
+      "s10.tag": "Closing",
+      "s10.sub": "Real privacy. Integrated compliance. Verified on-chain on Stellar. Built by Mongli DAO.",
+      "s10.link1.label": "Live demo",
+      "s10.link2.label": "Repository"
+    },
+    es: {
+      "meta.title": "MongliPool — Presentación",
+      "meta.desc": "MongliPool: el primer privacy pool con cumplimiento regulatorio nativo en Stellar. Criptografía ZK real, verificada on-chain.",
+      "hint": "usa las flechas del teclado",
+      "aria.prev": "Anterior", "aria.next": "Siguiente", "aria.dot": "Ir a la slide",
+      "s1.tag": "Portada",
+      "s1.sub": "El primer privacy pool con cumplimiento regulatorio nativo en Stellar — criptografía ZK real, verificada on-chain.",
+      "s2.tag": "El problema",
+      "s2.title": "En blockchain, la privacidad y el cumplimiento no coexisten",
+      "s2.p1.title": "Transacciones públicas",
+      "s2.p1.desc": "Cualquier persona puede ver quién envió dinero, cuánto, y cuándo. Zero privacidad por defecto en Stellar.",
+      "s2.p2.title": "Mixers sin control",
+      "s2.p2.desc": "Las soluciones actuales (mixers/tumblers) ofrecen privacidad pero sin cumplimiento regulatorio — facilitando lavado de dinero.",
+      "s2.p3.title": "DAOs y empresas expuestos",
+      "s2.p3.desc": "Tesoreros y pagadores en Stellar deben elegir entre privacidad o compliance. No hay una tercera opción.",
+      "s2.p4.title": "La oportunidad",
+      "s2.p4.desc": "ZK proofs permiten demostrar legitimidad sin revelar detalles — el ingrediente que faltaba para tener ambas cosas.",
+      "s3.tag": "La solución",
+      "s3.title": "MongliPool: privacidad + compliance en 3 pasos",
+      "s3.tagline": "“Depositas por una puerta, retiras por otra. Nadie sabe que son tuyas — pero el auditor puede verificarlo.”",
+      "s3.step1.title": "Depositar",
+      "s3.step1.desc": "Tu wallet genera un commitment hash + recibo secreto. Los fondos entran al pool. Nadie sabe quién depositó.",
+      "s3.step2.title": "Prueba ZK",
+      "s3.step2.desc": "Tu dispositivo genera una prueba matemática (21,781 constraints) que demuestra que eres dueño de un depósito, sin decir cuál.",
+      "s3.step3.title": "Retirar en privado",
+      "s3.step3.desc": "Los fondos llegan a cualquier dirección. Nadie puede vincular el retiro con el depósito original.",
+      "s4.tag": "Stack técnico",
+      "s4.title": "Criptografía real — no simulaciones",
+      "s4.card1.label": "Circuito ZK",
+      "s4.card1.sub": "21,781 constraints · depth 20 · Circom 2",
+      "s4.card2.label": "Verificación on-chain",
+      "s4.card2.sub": "BN254 host functions nativas · Protocolo 26",
+      "s4.card3.label": "Contratos Soroban",
+      "s4.card3.value": "3 contratos · 18/18 tests",
+      "s4.card4.label": "View key",
+      "s4.card4.value": "NaCl box asimétrico",
+      "s4.card4.sub": "Curve25519 · keypair efímero por depósito",
+      "s4.card5.label": "Proof generation",
+      "s4.card5.sub": "snarkjs en el browser · sin servidor · ~30s",
+      "s4.card6.label": "Frontend",
+      "s4.card6.sub": "TailwindCSS · stellar-wallets-kit · i18n ES/EN",
+      "s5.tag": "Compliance",
+      "s5.title": "Lo que nos diferencia: compliance integrado desde el diseño",
+      "s5.c1.title": "ASP (Authorized Set Provider)",
+      "s5.c1.desc": "Mongli DAO mantiene una lista de commitments aprobados. Solo usuarios legítimos pueden retirar.",
+      "s5.c2.title": "View key asimétrica",
+      "s5.c2.desc": "El auditor del DAO usa su clave privada Curve25519 para descifrar el historial. El público no puede.",
+      "s5.c3.title": "Doble Merkle proof",
+      "s5.c3.desc": "Cada retiro prueba pertenencia al pool tree y al ASP tree. Si no estás aprobado, la prueba ZK falla.",
+      "s5.analogy": "<strong>Analogía simple:</strong> MongliPool es como un banco que procesa pagos en efectivo anónimos, pero donde un auditor con llave maestra puede revisar los registros si un regulador lo requiere. El público no ve nada; el regulador lo puede ver todo con autorización.",
+      "s6.tag": "Comparativa",
+      "s6.title": "MongliPool vs. alternativas existentes",
+      "s6.th1": "Característica",
+      "s6.th3": "Mixers tradicionales",
+      "s6.row1": "Privacidad de routing",
+      "s6.row2": "Compliance / ASP integrado",
+      "s6.row3": "Auditoría selectiva (view key)",
+      "s6.row4": "Verificación ZK on-chain en Stellar",
+      "s6.row5": "Proof generation en browser",
+      "s6.row6": "Auditoría de seguridad externa",
+      "s6.pending": "(pendiente)",
+      "s7.tag": "Demo en vivo",
+      "s7.title": "Flujo end-to-end verificado en testnet",
+      "s7.step1.num": "PASO 1", "s7.step1.title": "Conectar wallet",
+      "s7.step1.desc": "Freighter en Stellar testnet. Dirección pública visible; lo que sigue, no.",
+      "s7.step2.num": "PASO 2", "s7.step2.title": "Depositar XLM",
+      "s7.step2.desc": "1-1000 XLM. Recibo secreto generado localmente. 3 firmas en Freighter.",
+      "s7.step3.num": "PASO 3", "s7.step3.title": "Prueba ZK (~30s)",
+      "s7.step3.desc": "snarkjs en WASM, client-side. Groth16 sobre BN254. Sin servidor.",
+      "s7.step4.num": "PASO 4", "s7.step4.title": "Retirar",
+      "s7.step4.desc": "Fondos a cualquier dirección. Nullifier marcado. Nadie vincula depósito con retiro.",
+      "s7.step5.num": "PASO 5", "s7.step5.title": "Auditar",
+      "s7.step5.desc": "Clave privada Curve25519 del DAO descifra notas. Historial visible solo para el auditor.",
+      "s7.link1.label": "URL en vivo",
+      "s7.link2.label": "Repo",
+      "s7.link3.label": "Tests",
+      "s7.link3.value": "18/18 passing · Rust · 3 contratos",
+      "s8.tag": "Roadmap",
+      "s8.title": "De MVP de hackathon a protocolo de producción",
+      "s8.item1.phase": "Fase 1<br/>Ahora",
+      "s8.item1.title": "MVP de hackathon (actual)",
+      "s8.item1.items": "Groth16/BN254 on-chain · View key asimétrica · ASP básico · monto variable · testnet",
+      "s8.item1.status": "✓ Listo",
+      "s8.item2.phase": "Fase 2<br/>Q3 2025",
+      "s8.item2.title": "Seguridad de producción",
+      "s8.item2.items": "Ceremonia MPC pública · Auditoría externa del circuito · View key multisig DAO · Relayer de confianza",
+      "s8.item2.status": "Siguiente",
+      "s8.item3.phase": "Fase 3<br/>Q4 2025",
+      "s8.item3.title": "Integración con Confidential Tokens (OZ)",
+      "s8.item3.items": "CT como capa 2 de privacidad · Privacidad total: routing + balances · Post-auditoría CT (ago 2025)",
+      "s8.item3.status": "Planificado",
+      "s8.item4.phase": "Fase 4<br/>2026",
+      "s8.item4.title": "Mainnet y expansión",
+      "s8.item4.items": "Mongli DAO como primer usuario piloto · Multi-asset (USDC, otros SEP-41) · API para otros proyectos de Stellar",
+      "s8.item4.status": "Visión",
+      "s9.tag": "Equipo",
+      "s9.dao": "Mongli DAO · Fundador",
+      "s9.note": "Construido en solitario para Stellar Hacks: ZK 2025 — desde el circuito ZK hasta el frontend, los contratos Soroban, y la criptografía asimétrica.",
+      "s10.tag": "Cierre",
+      "s10.sub": "Privacidad real. Compliance integrado. Verificado on-chain en Stellar. Construido por Mongli DAO.",
+      "s10.link1.label": "Demo en vivo",
+      "s10.link2.label": "Repositorio"
+    }
+  };
+
+  const LANG_KEY = 'mongliLang';
+  let lang = localStorage.getItem(LANG_KEY) || 'en';
+
   const slides = document.querySelectorAll('.slide');
   const dotsWrap = document.getElementById('dots');
   const counter = document.getElementById('counter');
@@ -684,11 +918,40 @@
   slides.forEach((_, i) => {
     const dot = document.createElement('button');
     dot.className = 'dot';
-    dot.setAttribute('aria-label', 'Ir a slide ' + (i + 1));
     dot.addEventListener('click', () => goTo(i));
     dotsWrap.appendChild(dot);
   });
   const dots = document.querySelectorAll('.dot');
+
+  function applyTranslations(){
+    const dict = translations[lang];
+    document.documentElement.lang = lang;
+    document.getElementById('pageTitle').textContent = dict['meta.title'];
+    document.getElementById('pageDesc').setAttribute('content', dict['meta.desc']);
+    document.getElementById('hintText').textContent = dict['hint'];
+    prevBtn.setAttribute('aria-label', dict['aria.prev']);
+    nextBtn.setAttribute('aria-label', dict['aria.next']);
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if(dict[key] !== undefined) el.textContent = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.getAttribute('data-i18n-html');
+      if(dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+    dots.forEach((d, i) => d.setAttribute('aria-label', dict['aria.dot'] + ' ' + (i + 1)));
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  }
+
+  function setLang(newLang){
+    lang = newLang;
+    localStorage.setItem(LANG_KEY, lang);
+    applyTranslations();
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => setLang(btn.dataset.lang));
+  });
 
   function render(){
     slides.forEach((s, i) => {
@@ -725,6 +988,7 @@
     if(Math.abs(dx) > 50){ dx < 0 ? goTo(current + 1) : goTo(current - 1); }
   });
 
+  applyTranslations();
   render();
 </script>
 
