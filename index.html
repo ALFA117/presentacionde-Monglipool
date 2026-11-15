@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title id="pageTitle">MongliPool — Pitch Deck</title>
 <meta id="pageDesc" name="description" content="MongliPool: the first privacy pool with native regulatory compliance on Stellar. Real ZK cryptography, verified on-chain.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a1128'/%3E%3Cpath d='M6 22 L6 12 Q6 10 8 10 L10 10 L16 17 L22 10 L24 10 Q26 10 26 12 L26 22' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Cpath d='M16 4 L17 7 L20 6.2 L18 8.2 L20.5 9.5 L17.5 9.5 L16 13 L14.5 9.5 L11.5 9.5 L14 8.2 L12 6.2 L15 7 Z' fill='%2300F5D4'/%3E%3C/svg%3E">
 <link rel="canonical" href="https://presentacionde-monglipool.vercel.app/">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="theme-color" content="#05070f">
+<meta name="theme-color" content="#0b0d10">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://presentacionde-monglipool.vercel.app/">
 <meta property="og:site_name" content="MongliPool">
@@ -21,795 +21,713 @@
 <meta name="twitter:image" content="https://presentacionde-monglipool.vercel.app/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
 <style>
+  /* ── Design tokens ─────────────────────────────────────────────────────
+     Direction: "audit report". A privacy protocol that sells compliance has
+     to read like a document a regulator would trust: editorial serif titles,
+     Plex for the body, Plex Mono for every hash, contract and constant.
+     Neutrals + one accent (the MongliPool green). No glow, no gradients. */
   :root{
-    --bg:#05070f;
-    --navy-0:#080d1f;
-    --navy-1:#0a1128;
-    --navy-2:#0d1f3c;
-    --surface-1:#0f1730;
-    --surface-2:#111a36;
-    --border:rgba(148,163,184,0.14);
-    --border-strong:rgba(148,163,184,0.28);
-    --border-accent:rgba(5,213,161,0.28);
-    --text-primary:#eef2f9;
-    --text-secondary:#9aa7c2;
-    --text-muted:#5f6c8a;
-    --text-danger:#f87171;
-    --accent-green:#05D5A1;
-    --accent-blue:#0066FF;
-    --accent-blue-2:#3b82f6;
-    --bg-accent:rgba(5,213,161,0.08);
-    --font-sans:'Inter',system-ui,-apple-system,sans-serif;
-    --font-mono:'JetBrains Mono',ui-monospace,monospace;
+    --bg:#0b0d10;
+    --panel:#111418;
+    --panel-2:#161a1f;
+    --line:#232930;
+    --line-strong:#323a43;
+    --text:#e9ecef;
+    --text-2:#a8b1ba;
+    --text-3:#828c96;
+    --accent:#3dd6a8;
+    --accent-ink:#052a1f;
+    --accent-soft:rgba(61,214,168,.09);
+    --accent-line:rgba(61,214,168,.38);
+    --danger:#ef8a80;
+    --warn:#e2b064;
+    --grid:rgba(255,255,255,.028);
+
+    --font-display:'Newsreader',Georgia,'Times New Roman',serif;
+    --font-sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',Consolas,monospace;
+
+    --r-sm:6px; --r-md:10px; --r-lg:14px;
+    --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px;
+    --ease:cubic-bezier(.2,.7,.2,1);
+    color-scheme:dark;
   }
-  /* Light theme — same accent pair, everything else inverted to a warm
-     off-white surface stack so it still reads as one brand, not two
-     unrelated decks. */
   :root[data-theme="light"]{
-    --bg:#f4f6fb;
-    --navy-0:#ffffff;
-    --navy-1:#ffffff;
-    --navy-2:#eef1f8;
-    --surface-1:#ffffff;
-    --surface-2:#eef1f8;
-    --border:rgba(15,23,42,0.10);
-    --border-strong:rgba(15,23,42,0.16);
-    --border-accent:rgba(5,150,105,0.35);
-    --text-primary:#0f172a;
-    --text-secondary:#48566f;
-    --text-muted:#7c879e;
-    --text-danger:#dc2626;
-    --accent-green:#059669;
-    --accent-blue:#0052cc;
-    --accent-blue-2:#2563eb;
-    --bg-accent:rgba(5,150,105,0.08);
-  }
-  :root[data-theme="light"] body{
-    background:
-      radial-gradient(1200px 700px at 15% -10%, rgba(0,82,204,0.08), transparent 60%),
-      radial-gradient(1000px 600px at 100% 110%, rgba(5,150,105,0.08), transparent 60%),
-      var(--bg);
+    --bg:#f2f1ec;
+    --panel:#ffffff;
+    --panel-2:#f7f6f2;
+    --line:#e3e1da;
+    --line-strong:#cdcac1;
+    --text:#14181c;
+    --text-2:#47505a;
+    --text-3:#646e78;
+    --accent:#08795b;
+    --accent-ink:#ffffff;
+    --accent-soft:rgba(8,121,91,.07);
+    --accent-line:rgba(8,121,91,.35);
+    --danger:#b42318;
+    --warn:#935f00;
+    --grid:rgba(20,24,28,.035);
+    color-scheme:light;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-
-  /* ── Fondo ambiental (ambient.js, receta 1) ─────────────────────────── */
-  body{ isolation:isolate; }
-  :root{ --amb-a:var(--accent-green); --amb-b:var(--accent-blue-2); --amb-c:var(--text-secondary); }
-  #ambient{ position:fixed; inset:0; z-index:-10; overflow:hidden; pointer-events:none; transition:opacity .6s ease; }
-  #ambient.amb-calm{ opacity:.5; }
-  :root[data-theme="light"] #ambient{ opacity:.6; }
-  :root[data-theme="light"] #ambient.amb-calm{ opacity:.35; }
-  .amb-stars{ position:absolute; inset:0; width:100%; height:100%; }
-  .amb-stage{ position:absolute; inset:0; perspective:900px; perspective-origin:50% 40%; }
-  .amb-float{ position:absolute; transform-style:preserve-3d; will-change:transform; }
-  .amb-spin{ position:relative; transform-style:preserve-3d; transform:rotateX(var(--tilt,0deg)); }
-  .amb-spin.amb-animate{ animation-name:amb-rotate; animation-timing-function:linear; animation-iteration-count:infinite; }
-  @keyframes amb-rotate{
-    from{ transform:rotateX(var(--tilt,0deg)) rotateY(0deg) rotateZ(0deg); }
-    to{ transform:rotateX(calc(var(--tilt,0deg) + 360deg)) rotateY(360deg) rotateZ(90deg); }
-  }
-  .amb-face{ position:absolute; top:0; left:0; border:1.5px solid var(--tone); color:var(--tone);
-    background:linear-gradient(135deg, color-mix(in srgb, var(--tone) 16%, transparent), transparent 70%);
-    box-shadow:0 0 18px -4px currentColor, inset 0 0 22px -8px currentColor; }
-  .amb-ring{ position:absolute; inset:0; border:2px solid var(--tone); color:var(--tone); border-radius:50%;
-    box-shadow:0 0 22px -4px currentColor, inset 0 0 22px -6px currentColor; }
-  .amb-core{ position:absolute; border-radius:50%; background:var(--tone); box-shadow:0 0 30px 10px color-mix(in srgb, var(--tone) 50%, transparent); }
-  .amb-core.amb-animate{ animation:amb-pulse 3.6s ease-in-out infinite; }
-  @keyframes amb-pulse{ 50%{ transform:scale(1.35); opacity:.75; } }
-  .amb-vignette{ position:absolute; inset:0; background:radial-gradient(ellipse 120% 90% at 50% 40%, transparent 45%, color-mix(in srgb, var(--bg) 85%, transparent) 100%); }
-  @media (prefers-reduced-motion: reduce){ .amb-animate{ animation:none !important; } }
   html,body{height:100%;}
   body{
     font-family:var(--font-sans);
-    background:
-      radial-gradient(1200px 700px at 15% -10%, rgba(0,102,255,0.16), transparent 60%),
-      radial-gradient(1000px 600px at 100% 110%, rgba(5,213,161,0.12), transparent 60%),
-      var(--bg);
-    color:var(--text-primary);
+    font-size:16px; line-height:1.55;
+    color:var(--text);
+    background-color:var(--bg);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:64px 64px;
+    background-position:-1px -1px;
     min-height:100vh;
     overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
   }
-  .app{
-    height:100vh;
-    height:100dvh;
-    display:flex;
-    flex-direction:column;
-  }
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:4px;}
+  .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+  .mono{font-family:var(--font-mono);}
 
-  /* Top bar */
+  .app{ height:100vh; height:100dvh; display:flex; flex-direction:column; }
+
+  /* ── Top bar ─────────────────────────────────────────────────────────── */
+  .progress-track{ position:fixed; top:0; left:0; right:0; height:2px; background:var(--line); z-index:5; }
+  .progress-bar{ height:100%; background:var(--accent); transition:width .45s var(--ease); }
+
   .topbar{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:1.1rem 1.75rem 0.9rem;
+    display:flex; align-items:center; justify-content:space-between; gap:var(--s4);
+    padding:calc(var(--s4) + env(safe-area-inset-top)) clamp(16px,3vw,32px) var(--s3);
     flex-shrink:0;
-    gap:1rem;
   }
-  .brand{ display:flex; align-items:center; gap:0.6rem; min-width:0; }
+  .brand{ display:flex; align-items:center; gap:var(--s3); min-width:0; }
   .brand-mark{
-    width:26px; height:26px; border-radius:8px; flex-shrink:0;
-    background:linear-gradient(135deg,var(--accent-green),var(--accent-blue));
-    display:flex; align-items:center; justify-content:center;
+    width:30px; height:30px; border-radius:7px; flex-shrink:0;
+    background:var(--text); color:var(--bg);
+    display:grid; place-items:center;
   }
-  .brand-mark svg{ width:16px; height:16px; }
-  .brand-name{ font-size:13px; font-weight:600; letter-spacing:0.02em; color:var(--text-primary); white-space:nowrap; }
-  .brand-tag{ font-size:12px; color:var(--text-muted); font-family:var(--font-mono); margin-left:0.35rem; white-space:nowrap; }
-  .topbar-right{ display:flex; align-items:center; gap:1rem; flex-shrink:0; }
-  .counter{ font-size:12px; color:var(--text-muted); font-family:var(--font-mono); }
+  .brand-mark svg{ width:18px; height:18px; }
+  .brand-name{ font-size:15px; font-weight:600; letter-spacing:-.005em; white-space:nowrap; }
+  .brand-sep{ width:1px; height:16px; background:var(--line-strong); }
+  .brand-tag{ font-size:13px; color:var(--text-3); font-family:var(--font-mono); white-space:nowrap; }
+  .topbar-right{ display:flex; align-items:center; gap:var(--s3); flex-shrink:0; }
+  .counter{ font-size:13px; color:var(--text-2); font-family:var(--font-mono); font-variant-numeric:tabular-nums; min-width:56px; text-align:right; }
 
-  .lang-toggle{
-    display:flex; align-items:center; background:var(--surface-1);
-    border:1px solid var(--border-strong); border-radius:20px; padding:2px;
+  .icon-btn{
+    width:44px; height:44px; border-radius:var(--r-sm);
+    display:grid; place-items:center;
+    background:var(--panel); border:1px solid var(--line-strong);
+    color:var(--text-2); cursor:pointer;
+    transition:color .2s, border-color .2s, background-color .2s, transform .15s;
   }
+  .icon-btn:hover{ color:var(--text); border-color:var(--text-3); }
+  .icon-btn:active:not(:disabled){ transform:scale(.96); }
+  .icon-btn i{ font-size:18px; }
+
+  .lang-toggle{ display:flex; height:44px; padding:3px; gap:2px; border-radius:var(--r-sm); background:var(--panel); border:1px solid var(--line-strong); }
   .lang-btn{
-    font-family:var(--font-sans); font-size:12px; font-weight:600;
-    color:var(--text-muted); background:transparent; border:none;
-    min-height:38px; padding:0 13px; border-radius:19px; cursor:pointer; transition:all 0.2s;
+    font:500 13px/1 var(--font-mono); color:var(--text-3);
+    background:transparent; border:0; border-radius:4px; min-width:40px; padding:0 10px; cursor:pointer;
+    transition:color .2s, background-color .2s;
   }
-  .lang-btn.active{ background:linear-gradient(135deg,var(--accent-green),var(--accent-blue)); color:#03150f; }
-  .lang-btn:not(.active):hover{ color:var(--text-primary); }
+  .lang-btn.active{ background:var(--text); color:var(--bg); }
+  .lang-btn:not(.active):hover{ color:var(--text); }
 
-  .theme-toggle{
-    display:flex; align-items:center; justify-content:center;
-    width:44px; height:44px; border-radius:50%;
-    background:var(--surface-1); border:1px solid var(--border-strong);
-    color:var(--text-secondary); cursor:pointer; transition:all 0.2s;
-  }
-  .theme-toggle:hover{ color:var(--accent-green); border-color:var(--accent-green); }
-  .theme-toggle i{ font-size:14px; }
-
-  .progress-track{
-    position:absolute; top:0; left:0; right:0; height:2px; background:transparent;
-  }
-  .progress-bar{
-    height:100%; background:linear-gradient(90deg,var(--accent-green),var(--accent-blue));
-    transition:width 0.4s cubic-bezier(.4,0,.2,1);
-  }
-
-  /* Slide viewport */
+  /* ── Stage & slides ─────────────────────────────────────────────────── */
   .viewport{
-    flex:1;
-    min-height:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:0 clamp(1rem, 4vw, 3rem) 0.5rem;
+    flex:1; min-height:0; display:flex; align-items:center; justify-content:center;
+    padding:var(--s2) clamp(16px,3vw,32px);
     position:relative;
-    /* las diapositivas inactivas esperan 24 px a la derecha: sin esto el celular se desplaza de lado */
-    overflow-x:clip;
+    overflow-x:clip; /* inactive slides wait 16px to the side: no sideways scroll on phones */
   }
-  .stage{
-    width:100%;
-    max-width:920px;
-    height:100%;
-    max-height:640px;
-    position:relative;
-  }
+  .stage{ width:100%; max-width:1180px; height:100%; max-height:720px; position:relative; }
   .slide{
-    position:absolute;
-    inset:0;
-    background:var(--surface-1);
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:clamp(1.5rem, 3.5vw, 3rem);
-    display:flex;
-    flex-direction:column;
-    opacity:0;
-    transform:translateX(24px) scale(0.985);
-    pointer-events:none;
-    transition:opacity 0.45s cubic-bezier(.4,0,.2,1), transform 0.45s cubic-bezier(.4,0,.2,1);
-    overflow-y:auto;
+    position:absolute; inset:0;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--r-lg);
+    box-shadow:0 1px 0 var(--line), 0 24px 48px -32px rgba(0,0,0,.45);
+    padding:clamp(24px,4vw,56px);
+    display:flex; flex-direction:column;
+    opacity:0; transform:translateX(16px);
+    pointer-events:none; visibility:hidden;
+    transition:opacity .4s var(--ease), transform .4s var(--ease), visibility 0s linear .4s;
+    overflow-y:auto; overscroll-behavior:contain;
+    scrollbar-width:thin; scrollbar-color:var(--line-strong) transparent;
   }
-  .slide.active{
-    opacity:1;
-    transform:translateX(0) scale(1);
-    pointer-events:auto;
+  :root[data-theme="light"] .slide{ box-shadow:0 1px 0 var(--line), 0 24px 48px -36px rgba(20,24,28,.25); }
+  .slide.active{ opacity:1; transform:none; pointer-events:auto; visibility:visible; transition:opacity .4s var(--ease), transform .4s var(--ease); }
+  .slide.prev{ transform:translateX(-16px); }
+
+  /* Staggered entry of the active slide's blocks (transform/opacity only) */
+  .slide.active .rv{ animation:rise .55s var(--ease) both; animation-delay:calc(var(--i,0) * 70ms + 80ms); }
+  @keyframes rise{ from{ opacity:0; transform:translateY(10px); } }
+  @media (prefers-reduced-motion: reduce){
+    .slide, .slide.active{ transition:none; }
+    .slide.active .rv{ animation:none; }
   }
-  .slide.prev{ transform:translateX(-24px) scale(0.985); }
 
-  .eyebrow{
-    display:flex; align-items:center; gap:0.6rem; margin-bottom:1.4rem; flex-shrink:0;
+  .s-head{
+    display:flex; align-items:center; gap:var(--s3);
+    padding-bottom:var(--s4); margin-bottom:clamp(20px,3.2vw,36px);
+    border-bottom:1px solid var(--line);
+    font-family:var(--font-mono); font-size:13px; color:var(--text-3);
+    flex-shrink:0;
   }
-  .slide-tag{
-    font-size:12px; font-weight:600; color:var(--accent-green);
-    background:var(--bg-accent); border:1px solid var(--border-accent);
-    padding:3px 11px; border-radius:20px; letter-spacing:0.03em;
+  .s-head .s-num{ color:var(--accent); font-weight:500; }
+  .s-head .s-tag{ color:var(--text-2); }
+  .s-head .s-meta{ margin-left:auto; white-space:nowrap; }
+  .s-body{ flex:1 0 auto; display:flex; flex-direction:column; justify-content:center; }
+  .s-body > *{ flex-shrink:0; }
+
+  .title{
+    font-family:var(--font-display); font-weight:400;
+    font-size:clamp(28px,3.4vw,44px); line-height:1.12; letter-spacing:-.015em;
+    color:var(--text); max-width:24ch; margin-bottom:clamp(20px,3vw,36px);
+    text-wrap:balance;
   }
-  .slide-num{ font-size:12px; color:var(--text-muted); font-family:var(--font-mono); }
+  .label{ font-family:var(--font-mono); font-size:12px; color:var(--text-3); letter-spacing:.02em; }
 
-  .slide-content{ flex:1; display:flex; flex-direction:column; justify-content:center; min-height:0; }
-
-  h1.slide-title, h2.slide-title{
-    font-size:clamp(1.15rem, 2.4vw, 1.55rem);
-    font-weight:700; color:var(--text-primary);
-    letter-spacing:-0.01em; margin-bottom:1.25rem; line-height:1.3;
+  .pill{
+    display:inline-flex; align-items:center; gap:6px;
+    font:500 12px/1 var(--font-mono); white-space:nowrap;
+    padding:6px 10px; border-radius:999px; border:1px solid var(--line-strong); color:var(--text-2);
   }
-  .tagline{ font-size:13px; color:var(--text-secondary); margin-bottom:1.25rem; font-style:italic; }
+  .pill .dot-s{ width:6px; height:6px; border-radius:50%; background:currentColor; }
+  .pill-accent{ color:var(--accent); border-color:var(--accent-line); background:var(--accent-soft); }
 
-  /* Slide 1 — Hero */
-  .hero{
-    flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
-    text-align:center; gap:1.1rem;
+  /* ── 01 Cover ───────────────────────────────────────────────────────── */
+  .cover{ display:grid; grid-template-columns:1.15fr .85fr; gap:clamp(24px,5vw,72px); align-items:center; flex:1; }
+  .cover-eyebrow{ font-family:var(--font-mono); font-size:13px; color:var(--text-3); margin-bottom:var(--s5); display:flex; align-items:center; gap:var(--s3); }
+  .cover-eyebrow::before{ content:""; width:24px; height:1px; background:var(--accent); flex-shrink:0; }
+  .cover-title{
+    display:flex; align-items:center; gap:clamp(12px,1.6vw,20px);
+    font-family:var(--font-display); font-weight:400;
+    font-size:clamp(48px,7.4vw,96px); line-height:1; letter-spacing:-.03em;
+    margin-bottom:var(--s5);
   }
-  .hero-logo{
-    width:72px; height:72px; border-radius:20px;
-    background:linear-gradient(135deg,var(--accent-green),var(--accent-blue));
-    display:flex; align-items:center; justify-content:center;
-    box-shadow:0 10px 40px -10px rgba(5,213,161,0.4);
+  .cover-mark{
+    width:clamp(44px,5.4vw,68px); height:clamp(44px,5.4vw,68px); flex-shrink:0;
+    border-radius:clamp(10px,1.2vw,15px); background:var(--text); color:var(--bg);
+    display:grid; place-items:center;
   }
-  .hero-logo svg{ width:40px; height:40px; }
-  /* El logo de la portada flota y un anillo de luz lo recorre: el único
-     movimiento continuo del hero (además del fondo). */
-  .hero-logo{ position:relative; animation:hero-float 6s ease-in-out infinite; }
-  .hero-logo::after{ content:""; position:absolute; inset:-10px; border-radius:inherit;
-    border:1.5px solid color-mix(in srgb, var(--accent-green) 55%, transparent);
-    animation:hero-ring 3.2s ease-out infinite; }
-  @keyframes hero-float{ 50%{ transform:translateY(-6px); } }
-  @keyframes hero-ring{ from{ transform:scale(.92); opacity:.9; } to{ transform:scale(1.35); opacity:0; } }
-  @media (prefers-reduced-motion: reduce){ .hero-logo, .hero-logo::after{ animation:none; } }
-  .hero-title{ font-size:clamp(1.8rem,4.5vw,2.6rem); font-weight:800; letter-spacing:-0.02em; }
-  .hero-sub{ font-size:14px; color:var(--text-secondary); max-width:440px; line-height:1.7; }
-  .hero-badges{ display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center; margin-top:0.3rem; }
-  .badge{ font-size:12px; font-weight:500; padding:4px 12px; border-radius:20px; border:1px solid; }
-  .badge-green{ color:var(--accent-green); border-color:rgba(5,213,161,0.4); background:rgba(5,213,161,0.08); }
-  .badge-blue{ color:#60a5fa; border-color:rgba(59,130,246,0.4); background:rgba(59,130,246,0.08); }
+  .cover-mark svg{ width:62%; height:62%; overflow:visible; }
+  .cover-sub{ font-size:clamp(17px,1.6vw,21px); line-height:1.5; color:var(--text-2); max-width:34ch; margin-bottom:var(--s6); }
+  .spec{ display:grid; grid-template-columns:repeat(3,auto); justify-content:start; gap:var(--s3) clamp(20px,3vw,40px); border-top:1px solid var(--line); padding-top:var(--s4); }
+  .spec dt{ font-family:var(--font-mono); font-size:12px; color:var(--text-3); margin-bottom:2px; }
+  .spec dd{ font-size:15px; font-weight:500; color:var(--text); }
+  .spec dd.mono{ font-size:14px; }
 
-  /* Slide 2 — Problem */
-  .problem-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-  .prob-card{ background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:1.1rem; transition:border-color .2s; }
-  .prob-icon{ font-size:20px; margin-bottom:0.6rem; }
-  .prob-title{ font-size:13px; font-weight:600; margin-bottom:0.3rem; }
-  .prob-desc{ font-size:12px; color:var(--text-secondary); line-height:1.55; }
-  .prob-bad{ border-color:rgba(248,113,113,0.25); }
-  .prob-good{ border-color:rgba(5,213,161,0.35); background:linear-gradient(135deg, rgba(5,213,161,0.06), var(--surface-2)); }
+  .merkle{ width:100%; max-width:420px; justify-self:end; }
+  .merkle svg{ width:100%; height:auto; display:block; overflow:visible; }
+  .merkle .e{ stroke:var(--line-strong); stroke-width:1.25; fill:none; }
+  .merkle .e-path{ stroke:var(--accent); stroke-width:2; fill:none; stroke-dasharray:320; stroke-dashoffset:0; }
+  .slide.active .merkle .e-path{ animation:draw 1.4s var(--ease) .35s both; }
+  @keyframes draw{ from{ stroke-dashoffset:320; } }
+  .merkle .n{ fill:var(--panel); stroke:var(--line-strong); stroke-width:1.25; }
+  .merkle .n-sib{ fill:var(--panel); stroke:var(--accent); stroke-width:1.25; stroke-dasharray:3 3; }
+  .merkle .n-path{ fill:var(--accent); stroke:var(--accent); }
+  .merkle .n-hidden{ fill:var(--accent-soft); stroke:var(--accent); stroke-width:1.5; }
+  .merkle text{ font-family:var(--font-mono); font-size:11px; fill:var(--text-3); }
+  .merkle text.t-accent{ fill:var(--accent); }
+  .merkle figcaption{ margin-top:var(--s4); padding-top:var(--s3); border-top:1px solid var(--line); font-size:14px; color:var(--text-2); line-height:1.5; }
+  @media (prefers-reduced-motion: reduce){ .slide.active .merkle .e-path{ animation:none; } }
 
-  /* Slide 3 — Solution */
-  .steps{ display:flex; gap:0; position:relative; }
-  .step{ flex:1; text-align:center; padding:1rem 0.6rem; position:relative; }
-  .step-num{
-    width:38px; height:38px; border-radius:50%;
-    background:linear-gradient(135deg,var(--accent-green),var(--accent-blue));
-    display:flex; align-items:center; justify-content:center; margin:0 auto 0.8rem;
-    color:#03150f; font-size:13px; font-weight:700;
+  /* ── 02 Problem ─────────────────────────────────────────────────────── */
+  .problem{ display:grid; grid-template-columns:1.35fr 1fr; gap:clamp(20px,3vw,40px); align-items:stretch; }
+  .rows{ list-style:none; border-top:1px solid var(--line); }
+  .rows li{ display:grid; grid-template-columns:40px 1fr; gap:var(--s4); padding:var(--s4) 0; border-bottom:1px solid var(--line); }
+  .row-ic{ width:40px; height:40px; border-radius:var(--r-sm); border:1px solid var(--line-strong); display:grid; place-items:center; color:var(--danger); }
+  .row-ic i{ font-size:20px; }
+  .row-t{ font-size:17px; font-weight:600; margin-bottom:2px; }
+  .row-d{ font-size:15px; color:var(--text-2); }
+  .callout{
+    background:var(--accent-soft); border:1px solid var(--accent-line); border-radius:var(--r-md);
+    padding:clamp(20px,2.4vw,28px); display:flex; flex-direction:column; gap:var(--s3); justify-content:center;
   }
-  .step-title{ font-size:12.5px; font-weight:600; margin-bottom:0.3rem; }
-  .step-desc{ font-size:12px; color:var(--text-secondary); line-height:1.55; }
-  .step-arrow{ position:absolute; right:-8px; top:20px; color:var(--accent-green); font-size:16px; }
+  .callout .ic{ width:44px; height:44px; border-radius:var(--r-sm); background:var(--accent); color:var(--accent-ink); display:grid; place-items:center; }
+  .callout .ic i{ font-size:22px; }
+  .callout h3{ font-family:var(--font-display); font-weight:400; font-size:clamp(24px,2.4vw,30px); line-height:1.15; letter-spacing:-.01em; }
+  .callout p{ font-size:16px; color:var(--text-2); }
 
-  /* Slide 4 — Tech */
-  .tech-grid{ display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; }
-  .tech-card{ background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:0.95rem; }
-  .tech-label{ font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.3rem; }
-  .tech-value{ font-size:13.5px; font-weight:600; font-family:var(--font-mono); }
-  .tech-sub{ font-size:12px; color:var(--text-secondary); margin-top:0.2rem; }
-
-  /* Slide 5 — Compliance */
-  .compliance-row{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.8rem; margin-bottom:1rem; }
-  .comp-card{ background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:1rem; text-align:center; }
-  .comp-icon{ font-size:24px; margin-bottom:0.55rem; color:var(--accent-green); }
-  .comp-title{ font-size:12px; font-weight:600; margin-bottom:0.3rem; }
-  .comp-desc{ font-size:12px; color:var(--text-secondary); line-height:1.55; }
-  .analogy{ padding:0.85rem 1.1rem; background:rgba(5,213,161,0.06); border:1px solid var(--border-accent); border-radius:12px; }
-  .analogy p{ font-size:12px; color:var(--text-secondary); line-height:1.65; }
-  .analogy strong{ color:var(--accent-green); }
-
-  /* Slide 6 — Benchmarking */
-  .bench-table{ width:100%; border-collapse:collapse; font-size:12.5px; }
-  .bench-table th{ text-align:left; color:var(--text-muted); font-weight:500; font-size:12px; padding:0.6rem 0.8rem; border-bottom:1px solid var(--border); }
-  .bench-table td{ padding:0.7rem 0.8rem; border-bottom:1px solid var(--border); color:var(--text-secondary); }
-  .bench-table tr:last-child td{ border-bottom:none; }
-  .bench-table .us{ background:rgba(5,213,161,0.05); border-radius:8px; }
-  .bench-table .us td{ color:var(--text-primary); font-weight:500; }
-  .check{ color:var(--accent-green); }
-  .cross{ color:var(--text-danger); }
-  .partial{ color:#f59e0b; }
-
-  /* Slide 7 — Demo */
-  .demo-flow{ display:flex; gap:0.7rem; align-items:stretch; margin-bottom:1rem; flex-wrap:wrap; }
-  .demo-step{ flex:1; min-width:140px; background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:0.9rem; }
-  .demo-step-num{ font-size:12px; color:var(--accent-green); font-family:var(--font-mono); margin-bottom:0.4rem; }
-  .demo-step-title{ font-size:12px; font-weight:600; margin-bottom:0.3rem; }
-  .demo-step-desc{ font-size:12px; color:var(--text-secondary); line-height:1.55; }
-  .links-row{ display:flex; gap:0.7rem; flex-wrap:wrap; }
-  .link-card{ flex:1; min-width:140px; background:rgba(5,213,161,0.05); border:1px solid var(--border-accent); border-radius:12px; padding:0.8rem; font-size:12px; color:var(--text-secondary); }
-  .link-card strong{ color:var(--accent-green); display:block; margin-bottom:0.3rem; }
-
-  /* Slide 8 — Roadmap */
-  .roadmap{ display:flex; flex-direction:column; gap:0.55rem; }
-  .road-item{ display:flex; gap:1rem; align-items:flex-start; padding:0.85rem 1rem; background:var(--surface-2); border:1px solid var(--border); border-radius:12px; }
-  .road-phase{ font-size:12px; color:var(--text-muted); font-family:var(--font-mono); min-width:65px; padding-top:2px; line-height:1.4; }
-  .road-content{ flex:1; }
-  .road-title{ font-size:12.5px; font-weight:600; margin-bottom:0.25rem; }
-  .road-items{ font-size:12px; color:var(--text-secondary); line-height:1.6; }
-  .road-status{ font-size:12px; font-weight:600; padding:3px 10px; border-radius:10px; white-space:nowrap; }
-  .status-done{ background:rgba(5,213,161,0.12); color:var(--accent-green); }
-  .status-next{ background:rgba(59,130,246,0.12); color:#60a5fa; }
-  .status-future{ background:var(--surface-1); color:var(--text-muted); border:1px solid var(--border); }
-
-  /* Slide 9 — Team */
-  .team-wrap{ flex:1; display:flex; align-items:center; justify-content:center; }
-  .team-card{
-    background:linear-gradient(135deg,var(--navy-1),var(--navy-2));
-    border:1px solid var(--border-strong);
-    border-radius:16px; padding:2.5rem 2rem;
-    display:flex; flex-direction:column; align-items:center; gap:0.9rem;
-    max-width:380px;
+  /* ── 03 Solution ────────────────────────────────────────────────────── */
+  .quote{
+    font-family:var(--font-display); font-style:italic; font-weight:400;
+    font-size:clamp(20px,2.2vw,27px); line-height:1.35; color:var(--text);
+    border-left:2px solid var(--accent); padding-left:var(--s5); max-width:50ch;
+    margin-bottom:clamp(28px,4vw,48px);
   }
-  .team-avatar-ring{
-    width:104px; height:104px; border-radius:50%; padding:3px;
-    background:linear-gradient(135deg,var(--accent-green),var(--accent-blue));
-    box-shadow:0 10px 32px -8px rgba(5,213,161,0.45);
-  }
-  .team-avatar{
-    width:100%; height:100%; border-radius:50%;
-    display:block; object-fit:cover; object-position:50% 38%;
-    border:3px solid var(--navy-1);
-  }
-  .team-name{ font-size:18px; font-weight:700; letter-spacing:0.12em; }
-  .team-dao{ font-size:13px; color:var(--accent-green); }
-  .team-links{ display:flex; gap:0.6rem; margin-top:0.2rem; flex-wrap:wrap; justify-content:center; }
-  .team-link{
-    font-size:12px; color:var(--text-secondary); padding:5px 13px;
-    border:1px solid var(--border-strong); border-radius:20px;
-    display:flex; align-items:center; gap:4px;
-    text-decoration:none; transition:all 0.2s; cursor:pointer;
-  }
-  .team-link:hover{ color:var(--accent-green); border-color:var(--accent-green); background:rgba(5,213,161,0.06); }
-  .team-note{ margin-top:0.4rem; font-size:12px; color:var(--text-muted); text-align:center; max-width:300px; line-height:1.65; }
+  .steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(16px,2.4vw,32px); list-style:none; }
+  .step{ position:relative; padding-top:var(--s5); border-top:1px solid var(--line-strong); }
+  .step::before{ content:""; position:absolute; top:-5px; left:0; width:9px; height:9px; border-radius:50%; background:var(--accent); }
+  .step-num{ font-family:var(--font-mono); font-size:13px; color:var(--accent); margin-bottom:var(--s2); }
+  .step-title{ font-size:19px; font-weight:600; margin-bottom:var(--s2); }
+  .step-desc{ font-size:15px; color:var(--text-2); }
 
-  /* Slide 10 — CTA */
-  .cta-wrap{ flex:1; display:flex; align-items:center; justify-content:center; }
-  .cta-bg{
-    background:linear-gradient(135deg,var(--navy-1),var(--navy-2));
-    border:1px solid var(--border-strong);
-    border-radius:16px; padding:2.25rem 2rem; text-align:center;
-    display:flex; flex-direction:column; gap:1rem; align-items:center; width:100%; max-width:460px;
-  }
-  .cta-title{ font-size:24px; font-weight:800; }
-  .cta-sub{ font-size:13px; color:var(--text-secondary); max-width:360px; line-height:1.65; }
-  .cta-links{ display:grid; grid-template-columns:1fr 1fr; gap:0.7rem; width:100%; }
-  .cta-link{ background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); border-radius:10px; padding:0.8rem; }
-  .cta-link-label{ font-size:12px; color:var(--text-muted); margin-bottom:0.3rem; }
-  .cta-link-url{ font-size:12px; color:var(--accent-green); font-family:var(--font-mono); word-break:break-all; }
-  .contracts{ display:flex; flex-direction:column; gap:0.3rem; width:100%; }
-  .contract-row{ display:flex; justify-content:space-between; align-items:center; font-size:12px; padding:0.4rem 0; border-bottom:1px solid rgba(255,255,255,0.07); }
-  .contract-name{ color:var(--text-muted); }
-  .contract-id{ color:var(--accent-green); font-family:var(--font-mono); }
-  .cta-footer{ font-size:12px; color:var(--text-muted); margin-top:0.3rem; }
+  /* ── 04 Tech (spec sheet) ───────────────────────────────────────────── */
+  .sheet{ width:100%; border-collapse:collapse; }
+  .sheet th, .sheet td{ text-align:left; vertical-align:top; padding:var(--s3) var(--s4) var(--s3) 0; border-bottom:1px solid var(--line); }
+  .sheet tr:first-child th, .sheet tr:first-child td{ border-top:1px solid var(--line); }
+  .sheet th{ font:400 13px/1.5 var(--font-mono); color:var(--text-3); width:24%; padding-top:calc(var(--s3) + 2px); }
+  .sheet .v{ font:500 15px/1.5 var(--font-mono); color:var(--text); width:34%; }
+  .sheet .d{ font-size:15px; color:var(--text-2); padding-right:0; }
+  .sheet .d.mono{ font-size:14px; }
 
-  /* Bottom controls */
+  /* ── 05 Compliance ──────────────────────────────────────────────────── */
+  .pillars{ display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin-bottom:var(--s5); }
+  .pillar{ padding:var(--s5) var(--s5) var(--s5) 0; }
+  .pillar + .pillar{ padding-left:var(--s5); border-left:1px solid var(--line); }
+  .pillar .ic{ width:40px; height:40px; border-radius:var(--r-sm); border:1px solid var(--accent-line); color:var(--accent); display:grid; place-items:center; margin-bottom:var(--s4); }
+  .pillar .ic i{ font-size:20px; }
+  .pillar h3{ font-size:17px; font-weight:600; margin-bottom:var(--s2); line-height:1.35; }
+  .pillar p{ font-size:15px; color:var(--text-2); }
+  .note{ display:grid; grid-template-columns:auto 1fr; gap:var(--s4); align-items:start; background:var(--panel-2); border:1px solid var(--line); border-radius:var(--r-md); padding:var(--s4) var(--s5); }
+  .note .ic{ color:var(--accent); font-size:20px; line-height:1.4; }
+  .note p{ font-size:15px; color:var(--text-2); }
+  .note strong{ color:var(--text); font-weight:600; }
+
+  /* ── 06 Benchmark ───────────────────────────────────────────────────── */
+  .bench{ width:100%; border-collapse:separate; border-spacing:0; table-layout:fixed; }
+  .bench col.c1{ width:40%; }
+  .bench th, .bench td{ padding:10px var(--s4); border-bottom:1px solid var(--line); text-align:center; }
+  .bench th:first-child, .bench td:first-child{ text-align:left; padding-left:0; }
+  .bench thead th{ font:500 13px/1.3 var(--font-mono); color:var(--text-3); border-bottom:1px solid var(--line-strong); vertical-align:bottom; }
+  .bench td:first-child{ font-size:15px; color:var(--text); }
+  .bench .us{ background:var(--accent-soft); }
+  .bench thead .us{ color:var(--accent); border-top-left-radius:var(--r-sm); border-top-right-radius:var(--r-sm); border-bottom-color:var(--accent-line); }
+  .bench tbody tr:last-child td{ border-bottom:0; }
+  .bench tbody tr:last-child .us{ border-bottom-left-radius:var(--r-sm); border-bottom-right-radius:var(--r-sm); }
+  .mk{ display:inline-grid; place-items:center; width:26px; height:26px; border-radius:50%; font-size:15px; }
+  .mk.yes{ color:var(--accent); background:var(--accent-soft); }
+  .mk.no{ color:var(--danger); }
+  .mk.part{ color:var(--warn); }
+  .bench .pend{ display:block; font:400 12px/1.3 var(--font-mono); color:var(--text-3); margin-top:2px; }
+  .legend{ display:flex; flex-wrap:wrap; gap:var(--s2) var(--s5); margin-top:var(--s4); font-size:14px; color:var(--text-2); }
+  .legend > span{ display:inline-flex; align-items:center; gap:var(--s2); }
+
+  /* ── 07 Demo ────────────────────────────────────────────────────────── */
+  .title-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:var(--s2) var(--s4); flex-wrap:wrap; margin-bottom:var(--s5); }
+  .title-row .title{ margin-bottom:0; }
+  .title-row .pill{ margin-top:var(--s2); }
+  .flow{ list-style:none; display:grid; grid-template-columns:repeat(5,1fr); border:1px solid var(--line); border-radius:var(--r-md); overflow:hidden; margin-bottom:var(--s5); }
+  .flow li{ padding:var(--s4); background:var(--panel-2); }
+  .flow li + li{ border-left:1px solid var(--line); }
+  .flow-num{ font:500 12px/1 var(--font-mono); color:var(--accent); margin-bottom:var(--s3); }
+  .flow-t{ font-size:16px; font-weight:600; margin-bottom:var(--s1); }
+  .flow-d{ font-size:14px; color:var(--text-2); line-height:1.5; }
+  .refs{ display:grid; grid-template-columns:repeat(3,1fr); gap:var(--s3); }
+  .ref{
+    display:flex; flex-direction:column; gap:2px; min-height:44px;
+    padding:var(--s3) var(--s4); border:1px solid var(--line); border-radius:var(--r-md);
+    text-decoration:none; transition:border-color .2s, background-color .2s;
+  }
+  a.ref:hover{ border-color:var(--accent-line); background:var(--accent-soft); }
+  .ref .label{ display:flex; align-items:center; justify-content:space-between; gap:var(--s2); }
+  .ref .v{ font:500 14px/1.4 var(--font-mono); color:var(--text); overflow-wrap:anywhere; }
+  a.ref .v{ color:var(--accent); }
+
+  /* ── 08 Roadmap ─────────────────────────────────────────────────────── */
+  .timeline{ list-style:none; }
+  .tl{ display:grid; grid-template-columns:96px 20px 1fr auto; gap:var(--s4); align-items:start; padding:var(--s3) 0; }
+  .tl-phase{ font:400 13px/1.45 var(--font-mono); color:var(--text-3); padding-top:2px; }
+  .tl-rail{ position:relative; align-self:stretch; }
+  .tl-rail::before{ content:""; position:absolute; left:9px; top:0; bottom:calc(-2 * var(--s3)); width:1px; background:var(--line-strong); }
+  .tl:first-child .tl-rail::before{ top:10px; }
+  .tl:last-child .tl-rail::before{ bottom:auto; height:10px; }
+  .tl-rail::after{ content:""; position:absolute; left:4px; top:6px; width:11px; height:11px; border-radius:50%; background:var(--panel); border:1.5px solid var(--line-strong); box-sizing:border-box; }
+  .tl.done .tl-rail::after{ background:var(--accent); border-color:var(--accent); }
+  .tl.next .tl-rail::after{ border-color:var(--accent); }
+  .tl-t{ font-size:17px; font-weight:600; margin-bottom:2px; }
+  .tl-d{ font-size:15px; color:var(--text-2); }
+  .status{ font:500 12px/1 var(--font-mono); padding:6px 10px; border-radius:999px; border:1px solid var(--line-strong); color:var(--text-3); white-space:nowrap; }
+  .status.done{ background:var(--accent); border-color:var(--accent); color:var(--accent-ink); }
+  .status.next{ border-color:var(--accent-line); color:var(--accent); }
+
+  /* ── 09 Team ────────────────────────────────────────────────────────── */
+  .team{ display:grid; grid-template-columns:auto 1fr; gap:clamp(24px,4vw,56px); align-items:center; max-width:880px; margin:0 auto; width:100%; }
+  .portrait{ width:clamp(140px,17vw,220px); aspect-ratio:4/5; border-radius:var(--r-md); overflow:hidden; border:1px solid var(--line-strong); background:var(--panel-2); }
+  .portrait img{ width:100%; height:100%; object-fit:cover; object-position:50% 35%; display:block; }
+  .team-name{ font-family:var(--font-display); font-weight:400; font-size:clamp(34px,4vw,52px); line-height:1; letter-spacing:.04em; margin-bottom:var(--s3); }
+  .team-role{ font-family:var(--font-mono); font-size:14px; color:var(--accent); margin-bottom:var(--s4); }
+  .team-note{ font-size:17px; color:var(--text-2); max-width:46ch; margin-bottom:var(--s5); }
+  .socials{ display:flex; flex-wrap:wrap; gap:var(--s2); }
+  .social{
+    display:inline-flex; align-items:center; gap:var(--s2); min-height:44px; padding:0 var(--s4);
+    border:1px solid var(--line-strong); border-radius:var(--r-sm);
+    font-size:14px; color:var(--text-2); text-decoration:none;
+    transition:color .2s, border-color .2s;
+  }
+  .social i{ font-size:18px; }
+  .social:hover{ color:var(--text); border-color:var(--text-3); }
+
+  /* ── 10 Closing ─────────────────────────────────────────────────────── */
+  .close{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(24px,5vw,72px); align-items:center; flex:1; }
+  .close-title{ font-family:var(--font-display); font-weight:400; font-size:clamp(44px,6vw,80px); line-height:1; letter-spacing:-.03em; margin-bottom:var(--s5); }
+  .close-sub{ font-size:clamp(17px,1.5vw,20px); color:var(--text-2); max-width:34ch; margin-bottom:var(--s6); }
+  .close-foot{ font-family:var(--font-mono); font-size:13px; color:var(--text-3); }
+  .stack{ display:flex; flex-direction:column; gap:var(--s5); }
+  .stack .refs{ grid-template-columns:1fr; }
+  .ledger{ border:1px solid var(--line); border-radius:var(--r-md); overflow:hidden; }
+  .ledger-h{ display:flex; justify-content:space-between; align-items:center; gap:var(--s3); padding:var(--s3) var(--s4); background:var(--panel-2); border-bottom:1px solid var(--line); }
+  .ledger-r{ display:flex; justify-content:space-between; gap:var(--s4); padding:var(--s3) var(--s4); font-size:14px; }
+  .ledger-r + .ledger-r{ border-top:1px solid var(--line); }
+  .ledger-r span:first-child{ color:var(--text-2); }
+  .ledger-r span:last-child{ font-family:var(--font-mono); color:var(--text); }
+
+  /* ── Controls ───────────────────────────────────────────────────────── */
   .controls{
-    display:flex; align-items:center; justify-content:center; gap:1.5rem;
-    padding:1rem 0 1.6rem; flex-shrink:0;
+    display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:var(--s4);
+    padding:var(--s3) clamp(16px,3vw,32px) calc(var(--s4) + env(safe-area-inset-bottom));
+    flex-shrink:0;
   }
-  .nav-btn{
-    width:44px; height:44px; border-radius:50%;
-    background:var(--surface-1); border:1px solid var(--border-strong);
-    color:var(--text-primary); font-size:16px;
-    display:flex; align-items:center; justify-content:center;
-    cursor:pointer; transition:all 0.2s;
-  }
-  .nav-btn:hover{ background:var(--surface-2); border-color:var(--accent-green); color:var(--accent-green); transform:scale(1.04); }
-  .nav-btn:active:not(:disabled){ transform:scale(0.95); }
-  .nav-btn:disabled{ opacity:0.3; cursor:default; }
-  .nav-btn:disabled:hover{ background:var(--surface-1); border-color:var(--border-strong); color:var(--text-primary); }
-  .dots{ display:flex; gap:7px; }
-  .dot{
-    position:relative;
-    width:7px; height:7px; border-radius:50%;
-    background:var(--border-strong); border:none; cursor:pointer;
-    transition:all 0.25s; padding:0;
-  }
-  /* Área táctil de 44 px de alto sin cambiar el tamaño visual del punto */
-  .dot::before{ content:""; position:absolute; inset:-18px -4px; }
-  .dot.active{ background:var(--accent-green); width:20px; border-radius:4px; }
-  .dot:hover{ background:var(--text-secondary); }
+  .nav{ display:flex; align-items:center; gap:var(--s4); }
+  .nav-btn:disabled{ opacity:.35; cursor:default; }
+  .nav-btn:disabled:hover{ color:var(--text-2); border-color:var(--line-strong); }
+  .dots{ display:flex; gap:6px; }
+  .dot{ position:relative; width:6px; height:6px; border-radius:3px; background:var(--line-strong); border:0; padding:0; cursor:pointer; transition:width .3s var(--ease), background-color .3s; }
+  .dot::before{ content:""; position:absolute; inset:-19px -3px; } /* 44px touch target */
+  .dot.active{ width:22px; background:var(--accent); }
+  .dot:hover:not(.active){ background:var(--text-3); }
+  .hint{ font:400 12px/1 var(--font-mono); color:var(--text-3); display:flex; align-items:center; gap:var(--s2); }
+  .hint kbd{ font:inherit; border:1px solid var(--line-strong); border-bottom-width:2px; border-radius:4px; padding:3px 6px; color:var(--text-2); }
+  .controls-r{ justify-self:end; }
 
-  .hint{
-    position:fixed; bottom:1rem; right:1.25rem; font-size:12px; color:var(--text-muted);
-    font-family:var(--font-mono); display:flex; align-items:center; gap:4px;
+  /* ── Responsive ─────────────────────────────────────────────────────── */
+  @media (max-width:960px){
+    .cover, .close{ grid-template-columns:1fr; }
+    .merkle{ justify-self:start; max-width:380px; }
+    .problem{ grid-template-columns:1fr; }
+    .flow{ grid-template-columns:1fr 1fr; }
+    .flow li + li{ border-left:0; }
+    .flow li{ border-bottom:1px solid var(--line); }
+    .flow li:nth-child(even){ border-left:1px solid var(--line); }
   }
-
   @media (max-width:640px){
-    .problem-grid, .tech-grid{ grid-template-columns:1fr; }
-    .compliance-row{ grid-template-columns:1fr; }
-    .steps{ flex-direction:column; }
-    .step-arrow{ display:none; }
-    .demo-flow{ flex-direction:column; }
-    .bench-table{ font-size:12px; }
-    .bench-table th, .bench-table td{ padding:0.5rem 0.4rem; }
-    .hint{ display:none; }
-    .cta-links{ grid-template-columns:1fr; }
-    .brand-tag{ display:none; }
+    .brand-sep, .brand-tag, .hint{ display:none; }
+    .topbar-right{ gap:var(--s2); }
+    .counter{ min-width:0; }
+    .controls{ grid-template-columns:1fr; justify-items:center; }
+    .controls-r{ display:none; }
+    .slide{ border-radius:var(--r-md); padding:24px 20px; }
+    .s-body{ justify-content:flex-start; }
+    .cover{ align-content:start; }
+    .spec{ grid-template-columns:1fr 1fr; }
+    .steps, .pillars, .refs, .stack .refs{ grid-template-columns:1fr; }
+    .pillar, .pillar + .pillar{ padding:var(--s4) 0; border-left:0; }
+    .pillar + .pillar{ border-top:1px solid var(--line); }
+    .flow{ grid-template-columns:1fr; }
+    .flow li:nth-child(even){ border-left:0; }
+    .flow li:last-child{ border-bottom:0; }
+    .sheet, .sheet tbody, .sheet tr, .sheet th, .sheet td{ display:block; width:auto; }
+    .sheet tr{ padding:var(--s3) 0; border-bottom:1px solid var(--line); }
+    .sheet tr:first-child{ border-top:1px solid var(--line); }
+    .sheet th, .sheet td, .sheet tr:first-child th, .sheet tr:first-child td{ border:0; padding:0; }
+    .sheet .v{ margin:2px 0; width:auto; }
+    .sheet th{ width:auto; }
+    .bench col.c1{ width:34%; }
+    .bench th, .bench td{ padding:var(--s3) var(--s1); }
+    .bench thead th{ font-size:12px; overflow-wrap:anywhere; }
+    .bench td:first-child{ font-size:14px; }
+    .tl{ grid-template-columns:20px 1fr; gap:var(--s1) var(--s3); }
+    .tl-phase{ grid-column:2; grid-row:1; }
+    .tl-phase br{ display:none; }
+    .tl-rail{ grid-column:1; grid-row:1 / span 3; }
+    .tl-c{ grid-column:2; }
+    .tl .status{ grid-column:2; justify-self:start; margin-top:var(--s1); }
+    .team{ grid-template-columns:1fr; }
+    .cover-title{ font-size:clamp(40px,13vw,56px); }
   }
 </style>
 </head>
 <body>
-<div id="ambient" aria-hidden="true"></div>
-
 <div class="app">
-  <div class="progress-track"><div class="progress-bar" id="progressBar" style="width:10%"></div></div>
+  <div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progressBar" style="width:10%"></div></div>
 
-  <div class="topbar">
+  <header class="topbar">
     <div class="brand">
-      <div class="brand-mark">
+      <div class="brand-mark" aria-hidden="true">
         <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 22 L6 12 Q6 10 8 10 L10 10 L16 17 L22 10 L24 10 Q26 10 26 12 L26 22" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M6 23 L6 12 Q6 10 8 10 L10 10 L16 17 L22 10 L24 10 Q26 10 26 12 L26 23" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
       <span class="brand-name">MongliPool</span>
+      <span class="brand-sep" aria-hidden="true"></span>
       <span class="brand-tag">Stellar Hacks: ZK 2025</span>
     </div>
     <div class="topbar-right">
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme">
-        <i class="ti ti-moon" id="themeIcon"></i>
+      <button class="icon-btn theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme">
+        <i class="ti ti-moon" id="themeIcon" aria-hidden="true"></i>
       </button>
       <div class="lang-toggle" id="langToggle" role="group" aria-label="Language selector">
-        <button class="lang-btn" data-lang="en">EN</button>
-        <button class="lang-btn" data-lang="es">ES</button>
+        <button class="lang-btn" type="button" data-lang="en">EN</button>
+        <button class="lang-btn" type="button" data-lang="es">ES</button>
       </div>
-      <span class="counter" id="counter">01 / 10</span>
+      <span class="counter" id="counter" aria-live="polite">01 / 10</span>
     </div>
-  </div>
+  </header>
 
-  <div class="viewport">
+  <main class="viewport">
     <div class="stage" id="stage">
 
-      <!-- SLIDE 1 — HERO -->
-      <section class="slide">
-        <div class="eyebrow"><span class="slide-tag" data-i18n="s1.tag"></span></div>
-        <div class="hero">
-          <div class="hero-logo">
-            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 22 L6 12 Q6 10 8 10 L10 10 L16 17 L22 10 L24 10 Q26 10 26 12 L26 22" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-              <path d="M8 22 Q12 19.5 16 22 Q20 24.5 24 22" stroke="#03150f" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-              <path d="M16 4 L17 7 L20 6.2 L18 8.2 L20.5 9.5 L17.5 9.5 L16 13 L14.5 9.5 L11.5 9.5 L14 8.2 L12 6.2 L15 7 Z" fill="#03150f"/>
+      <!-- 01 — COVER -->
+      <section class="slide" aria-roledescription="slide">
+        <div class="s-head"><span class="s-num">01</span><span class="s-tag" data-i18n="s1.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="cover">
+          <div>
+            <p class="cover-eyebrow rv" style="--i:0" data-i18n="s1.eyebrow"></p>
+            <h1 class="cover-title rv" style="--i:1">
+              <span class="cover-mark" aria-hidden="true">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 24 L6 13 Q6 11 8 11 L10 11 L16 18 L22 11 L24 11 Q26 11 26 13 L26 24" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M16 0.5 L17 3.5 L20 2.7 L18 4.7 L20.5 6 L17.5 6 L16 9.5 L14.5 6 L11.5 6 L14 4.7 L12 2.7 L15 3.5 Z" fill="var(--accent)"/>
+                </svg>
+              </span>
+              MongliPool
+            </h1>
+            <p class="cover-sub rv" style="--i:2" data-i18n="s1.sub"></p>
+            <dl class="spec rv" style="--i:3">
+              <div><dt data-i18n="s1.k1"></dt><dd class="mono">Groth16 / BN254</dd></div>
+              <div><dt data-i18n="s1.k2"></dt><dd>Stellar Testnet</dd></div>
+              <div><dt data-i18n="s1.k3"></dt><dd>Mongli DAO</dd></div>
+            </dl>
+          </div>
+          <figure class="merkle rv" style="--i:2">
+            <svg viewBox="0 0 400 290" role="img" aria-labelledby="merkleCap">
+              <path class="e" d="M200 34 L100 100 M200 34 L300 100 M100 100 L50 170 M300 100 L250 170 M300 100 L350 170 M50 170 L25 244 M50 170 L75 244 M150 170 L175 244 M250 170 L225 244 M250 170 L275 244 M350 170 L325 244 M350 170 L375 244"/>
+              <path class="e-path" d="M125 244 L150 170 L100 100 L200 34"/>
+              <circle class="n-path" cx="200" cy="34" r="8"/>
+              <text x="216" y="38" class="t-accent" data-i18n="s1.root"></text>
+              <circle class="n-path" cx="100" cy="100" r="6"/>
+              <circle class="n-sib" cx="300" cy="100" r="6"/>
+              <circle class="n-sib" cx="50" cy="170" r="6"/>
+              <circle class="n-path" cx="150" cy="170" r="6"/>
+              <circle class="n" cx="250" cy="170" r="6"/>
+              <circle class="n" cx="350" cy="170" r="6"/>
+              <rect class="n" x="18" y="237" width="14" height="14" rx="2"/>
+              <rect class="n" x="68" y="237" width="14" height="14" rx="2"/>
+              <rect class="n-hidden" x="118" y="237" width="14" height="14" rx="2"/>
+              <rect class="n-sib" x="168" y="237" width="14" height="14" rx="2"/>
+              <rect class="n" x="218" y="237" width="14" height="14" rx="2"/>
+              <rect class="n" x="268" y="237" width="14" height="14" rx="2"/>
+              <rect class="n" x="318" y="237" width="14" height="14" rx="2"/>
+              <rect class="n" x="368" y="237" width="14" height="14" rx="2"/>
+              <text x="125" y="276" text-anchor="middle" class="t-accent">?</text>
+              <text x="250" y="276" text-anchor="middle" data-i18n="s1.leaves"></text>
             </svg>
-          </div>
-          <div class="hero-title">MongliPool</div>
-          <div class="hero-sub" data-i18n="s1.sub"></div>
-          <div class="hero-badges">
-            <span class="badge badge-green">Groth16 / BN254</span>
-            <span class="badge badge-blue">Stellar Testnet</span>
-            <span class="badge badge-green">Stellar Hacks: ZK 2025</span>
-            <span class="badge badge-blue">Mongli DAO</span>
-          </div>
+            <figcaption id="merkleCap" data-i18n="s1.fig"></figcaption>
+          </figure>
         </div>
       </section>
 
-      <!-- SLIDE 2 — PROBLEM -->
-      <section class="slide">
-        <div class="eyebrow"><span class="slide-tag" data-i18n="s2.tag"></span></div>
-        <div class="slide-content">
-          <h2 class="slide-title" data-i18n="s2.title"></h2>
-          <div class="problem-grid">
-            <div class="prob-card prob-bad">
-              <div class="prob-icon"><i class="ti ti-eye" style="color:var(--text-danger)"></i></div>
-              <div class="prob-title" data-i18n="s2.p1.title"></div>
-              <div class="prob-desc" data-i18n="s2.p1.desc"></div>
-            </div>
-            <div class="prob-card prob-bad">
-              <div class="prob-icon"><i class="ti ti-ban" style="color:var(--text-danger)"></i></div>
-              <div class="prob-title" data-i18n="s2.p2.title"></div>
-              <div class="prob-desc" data-i18n="s2.p2.desc"></div>
-            </div>
-            <div class="prob-card prob-bad">
-              <div class="prob-icon"><i class="ti ti-building-bank" style="color:var(--text-danger)"></i></div>
-              <div class="prob-title" data-i18n="s2.p3.title"></div>
-              <div class="prob-desc" data-i18n="s2.p3.desc"></div>
-            </div>
-            <div class="prob-card prob-good">
-              <div class="prob-icon"><i class="ti ti-shield-check" style="color:var(--accent-green)"></i></div>
-              <div class="prob-title" data-i18n="s2.p4.title"></div>
-              <div class="prob-desc" data-i18n="s2.p4.desc"></div>
+      <!-- 02 — PROBLEM -->
+      <section class="slide" aria-roledescription="slide">
+        <div class="s-head"><span class="s-num">02</span><span class="s-tag" data-i18n="s2.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="s-body">
+          <h2 class="title rv" style="--i:0" data-i18n="s2.title"></h2>
+          <div class="problem">
+            <ul class="rows rv" style="--i:1">
+              <li><span class="row-ic" aria-hidden="true"><i class="ti ti-eye"></i></span><div><div class="row-t" data-i18n="s2.p1.title"></div><div class="row-d" data-i18n="s2.p1.desc"></div></div></li>
+              <li><span class="row-ic" aria-hidden="true"><i class="ti ti-ban"></i></span><div><div class="row-t" data-i18n="s2.p2.title"></div><div class="row-d" data-i18n="s2.p2.desc"></div></div></li>
+              <li><span class="row-ic" aria-hidden="true"><i class="ti ti-building-bank"></i></span><div><div class="row-t" data-i18n="s2.p3.title"></div><div class="row-d" data-i18n="s2.p3.desc"></div></div></li>
+            </ul>
+            <div class="callout rv" style="--i:2">
+              <span class="ic" aria-hidden="true"><i class="ti ti-shield-check"></i></span>
+              <h3 data-i18n="s2.p4.title"></h3>
+              <p data-i18n="s2.p4.desc"></p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 3 — SOLUTION -->
-      <section class="slide">
-        <div class="eyebrow"><span class="slide-tag" data-i18n="s3.tag"></span></div>
-        <div class="slide-content">
-          <h2 class="slide-title" data-i18n="s3.title"></h2>
-          <p class="tagline" data-i18n="s3.tagline"></p>
-          <div class="steps">
-            <div class="step">
-              <div class="step-num">01</div>
-              <div class="step-title" data-i18n="s3.step1.title"></div>
-              <div class="step-desc" data-i18n="s3.step1.desc"></div>
-              <span class="step-arrow"><i class="ti ti-chevron-right"></i></span>
-            </div>
-            <div class="step">
-              <div class="step-num">02</div>
-              <div class="step-title" data-i18n="s3.step2.title"></div>
-              <div class="step-desc" data-i18n="s3.step2.desc"></div>
-              <span class="step-arrow"><i class="ti ti-chevron-right"></i></span>
-            </div>
-            <div class="step">
-              <div class="step-num">03</div>
-              <div class="step-title" data-i18n="s3.step3.title"></div>
-              <div class="step-desc" data-i18n="s3.step3.desc"></div>
-            </div>
-          </div>
+      <!-- 03 — SOLUTION -->
+      <section class="slide" aria-roledescription="slide">
+        <div class="s-head"><span class="s-num">03</span><span class="s-tag" data-i18n="s3.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="s-body">
+          <h2 class="title rv" style="--i:0" data-i18n="s3.title"></h2>
+          <blockquote class="quote rv" style="--i:1" data-i18n="s3.tagline"></blockquote>
+          <ol class="steps">
+            <li class="step rv" style="--i:2"><div class="step-num">01</div><div class="step-title" data-i18n="s3.step1.title"></div><div class="step-desc" data-i18n="s3.step1.desc"></div></li>
+            <li class="step rv" style="--i:3"><div class="step-num">02</div><div class="step-title" data-i18n="s3.step2.title"></div><div class="step-desc" data-i18n="s3.step2.desc"></div></li>
+            <li class="step rv" style="--i:4"><div class="step-num">03</div><div class="step-title" data-i18n="s3.step3.title"></div><div class="step-desc" data-i18n="s3.step3.desc"></div></li>
+          </ol>
         </div>
       </section>
 
-      <!-- SLIDE 4 — TECH -->
-      <section class="slide">
-        <div class="eyebrow"><span class="slide-tag" data-i18n="s4.tag"></span></div>
-        <div class="slide-content">
-          <h2 class="slide-title" data-i18n="s4.title"></h2>
-          <div class="tech-grid">
-            <div class="tech-card">
-              <div class="tech-label" data-i18n="s4.card1.label"></div>
-              <div class="tech-value">Groth16 / BN254</div>
-              <div class="tech-sub" data-i18n="s4.card1.sub"></div>
-            </div>
-            <div class="tech-card">
-              <div class="tech-label" data-i18n="s4.card2.label"></div>
-              <div class="tech-value">Soroban SDK v25</div>
-              <div class="tech-sub" data-i18n="s4.card2.sub"></div>
-            </div>
-            <div class="tech-card">
-              <div class="tech-label" data-i18n="s4.card3.label"></div>
-              <div class="tech-value" data-i18n="s4.card3.value"></div>
-              <div class="tech-sub">groth16-verifier · privacy-pool · asp-registry</div>
-            </div>
-            <div class="tech-card">
-              <div class="tech-label" data-i18n="s4.card4.label"></div>
-              <div class="tech-value" data-i18n="s4.card4.value"></div>
-              <div class="tech-sub" data-i18n="s4.card4.sub"></div>
-            </div>
-            <div class="tech-card">
-              <div class="tech-label" data-i18n="s4.card5.label"></div>
-              <div class="tech-value">Client-side WASM</div>
-              <div class="tech-sub" data-i18n="s4.card5.sub"></div>
-            </div>
-            <div class="tech-card">
-              <div class="tech-label" data-i18n="s4.card6.label"></div>
-              <div class="tech-value">React + Vite + TS</div>
-              <div class="tech-sub" data-i18n="s4.card6.sub"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SLIDE 5 — COMPLIANCE -->
-      <section class="slide">
-        <div class="eyebrow"><span class="slide-tag" data-i18n="s5.tag"></span></div>
-        <div class="slide-content">
-          <h2 class="slide-title" data-i18n="s5.title"></h2>
-          <div class="compliance-row">
-            <div class="comp-card">
-              <div class="comp-icon"><i class="ti ti-list-check"></i></div>
-              <div class="comp-title" data-i18n="s5.c1.title"></div>
-              <div class="comp-desc" data-i18n="s5.c1.desc"></div>
-            </div>
-            <div class="comp-card">
-              <div class="comp-icon"><i class="ti ti-key"></i></div>
-              <div class="comp-title" data-i18n="s5.c2.title"></div>
-              <div class="comp-desc" data-i18n="s5.c2.desc"></div>
-            </div>
-            <div class="comp-card">
-              <div class="comp-icon"><i class="ti ti-shield-lock"></i></div>
-              <div class="comp-title" data-i18n="s5.c3.title"></div>
-              <div class="comp-desc" data-i18n="s5.c3.desc"></div>
-            </div>
-          </div>
-          <div class="analogy">
-            <p data-i18n-html="s5.analogy"></p>
-          </div>
-        </div>
-      </section>
-
-      <!-- SLIDE 6 — BENCHMARKING -->
-      <section class="slide">
-        <div class="eyebrow"><span class="slide-tag" data-i18n="s6.tag"></span></div>
-        <div class="slide-content">
-          <h2 class="slide-title" data-i18n="s6.title"></h2>
-          <table class="bench-table">
-            <thead>
-              <tr>
-                <th data-i18n="s6.th1"></th>
-                <th>Tornado Cash</th>
-                <th data-i18n="s6.th3"></th>
-                <th style="color:var(--accent-green)">MongliPool</th>
-              </tr>
-            </thead>
+      <!-- 04 — TECH -->
+      <section class="slide" aria-roledescription="slide">
+        <div class="s-head"><span class="s-num">04</span><span class="s-tag" data-i18n="s4.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="s-body">
+          <h2 class="title rv" style="--i:0" data-i18n="s4.title"></h2>
+          <table class="sheet rv" style="--i:1">
             <tbody>
-              <tr>
-                <td data-i18n="s6.row1"></td>
-                <td class="check"><i class="ti ti-check"></i></td>
-                <td class="check"><i class="ti ti-check"></i></td>
-                <td class="us check"><i class="ti ti-check"></i></td>
-              </tr>
-              <tr>
-                <td data-i18n="s6.row2"></td>
-                <td class="cross"><i class="ti ti-x"></i></td>
-                <td class="cross"><i class="ti ti-x"></i></td>
-                <td class="us check"><i class="ti ti-check"></i></td>
-              </tr>
-              <tr>
-                <td data-i18n="s6.row3"></td>
-                <td class="cross"><i class="ti ti-x"></i></td>
-                <td class="cross"><i class="ti ti-x"></i></td>
-                <td class="us check"><i class="ti ti-check"></i></td>
-              </tr>
-              <tr>
-                <td data-i18n="s6.row4"></td>
-                <td class="cross"><i class="ti ti-x"></i></td>
-                <td class="cross"><i class="ti ti-x"></i></td>
-                <td class="us check"><i class="ti ti-check"></i></td>
-              </tr>
-              <tr>
-                <td data-i18n="s6.row5"></td>
-                <td class="partial"><i class="ti ti-minus"></i></td>
-                <td class="cross"><i class="ti ti-x"></i></td>
-                <td class="us check"><i class="ti ti-check"></i></td>
-              </tr>
-              <tr>
-                <td data-i18n="s6.row6"></td>
-                <td class="check"><i class="ti ti-check"></i></td>
-                <td class="partial"><i class="ti ti-minus"></i></td>
-                <td class="us cross"><i class="ti ti-x"></i> <span data-i18n="s6.pending"></span></td>
-              </tr>
+              <tr><th scope="row" data-i18n="s4.card1.label"></th><td class="v">Groth16 / BN254</td><td class="d" data-i18n="s4.card1.sub"></td></tr>
+              <tr><th scope="row" data-i18n="s4.card2.label"></th><td class="v">Soroban SDK v25</td><td class="d" data-i18n="s4.card2.sub"></td></tr>
+              <tr><th scope="row" data-i18n="s4.card3.label"></th><td class="v" data-i18n="s4.card3.value"></td><td class="d mono">groth16-verifier · privacy-pool · asp-registry</td></tr>
+              <tr><th scope="row" data-i18n="s4.card4.label"></th><td class="v" data-i18n="s4.card4.value"></td><td class="d" data-i18n="s4.card4.sub"></td></tr>
+              <tr><th scope="row" data-i18n="s4.card5.label"></th><td class="v">Client-side WASM</td><td class="d" data-i18n="s4.card5.sub"></td></tr>
+              <tr><th scope="row" data-i18n="s4.card6.label"></th><td class="v">React + Vite + TS</td><td class="d" data-i18n="s4.card6.sub"></td></tr>
             </tbody>
           </table>
         </div>
       </section>
 
-      <!-- SLIDE 7 — DEMO -->
-      <section class="slide">
-        <div class="eyebrow"><span class="slide-tag" data-i18n="s7.tag"></span></div>
-        <div class="slide-content">
-          <h2 class="slide-title" data-i18n="s7.title"></h2>
-          <div class="demo-flow">
-            <div class="demo-step">
-              <div class="demo-step-num" data-i18n="s7.step1.num"></div>
-              <div class="demo-step-title" data-i18n="s7.step1.title"></div>
-              <div class="demo-step-desc" data-i18n="s7.step1.desc"></div>
-            </div>
-            <div class="demo-step">
-              <div class="demo-step-num" data-i18n="s7.step2.num"></div>
-              <div class="demo-step-title" data-i18n="s7.step2.title"></div>
-              <div class="demo-step-desc" data-i18n="s7.step2.desc"></div>
-            </div>
-            <div class="demo-step">
-              <div class="demo-step-num" data-i18n="s7.step3.num"></div>
-              <div class="demo-step-title" data-i18n="s7.step3.title"></div>
-              <div class="demo-step-desc" data-i18n="s7.step3.desc"></div>
-            </div>
-            <div class="demo-step">
-              <div class="demo-step-num" data-i18n="s7.step4.num"></div>
-              <div class="demo-step-title" data-i18n="s7.step4.title"></div>
-              <div class="demo-step-desc" data-i18n="s7.step4.desc"></div>
-            </div>
-            <div class="demo-step">
-              <div class="demo-step-num" data-i18n="s7.step5.num"></div>
-              <div class="demo-step-title" data-i18n="s7.step5.title"></div>
-              <div class="demo-step-desc" data-i18n="s7.step5.desc"></div>
-            </div>
+      <!-- 05 — COMPLIANCE -->
+      <section class="slide" aria-roledescription="slide">
+        <div class="s-head"><span class="s-num">05</span><span class="s-tag" data-i18n="s5.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="s-body">
+          <h2 class="title rv" style="--i:0" data-i18n="s5.title"></h2>
+          <div class="pillars rv" style="--i:1">
+            <div class="pillar"><span class="ic" aria-hidden="true"><i class="ti ti-list-check"></i></span><h3 data-i18n="s5.c1.title"></h3><p data-i18n="s5.c1.desc"></p></div>
+            <div class="pillar"><span class="ic" aria-hidden="true"><i class="ti ti-key"></i></span><h3 data-i18n="s5.c2.title"></h3><p data-i18n="s5.c2.desc"></p></div>
+            <div class="pillar"><span class="ic" aria-hidden="true"><i class="ti ti-shield-lock"></i></span><h3 data-i18n="s5.c3.title"></h3><p data-i18n="s5.c3.desc"></p></div>
           </div>
-          <div class="links-row">
-            <div class="link-card"><strong data-i18n="s7.link1.label"></strong>mongli-pool.vercel.app</div>
-            <div class="link-card"><strong data-i18n="s7.link2.label"></strong>github.com/ALFA117/MongliPool</div>
-            <div class="link-card"><strong data-i18n="s7.link3.label"></strong><span data-i18n="s7.link3.value"></span></div>
+          <div class="note rv" style="--i:2">
+            <i class="ti ti-building-bank ic" aria-hidden="true"></i>
+            <p data-i18n-html="s5.analogy"></p>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 8 — ROADMAP -->
-      <section class="slide">
-        <div class="eyebrow"><span class="slide-tag" data-i18n="s8.tag"></span></div>
-        <div class="slide-content">
-          <h2 class="slide-title" data-i18n="s8.title"></h2>
-          <div class="roadmap">
-            <div class="road-item">
-              <div class="road-phase" data-i18n-html="s8.item1.phase"></div>
-              <div class="road-content">
-                <div class="road-title" data-i18n="s8.item1.title"></div>
-                <div class="road-items" data-i18n="s8.item1.items"></div>
+      <!-- 06 — BENCHMARK -->
+      <section class="slide" aria-roledescription="slide">
+        <div class="s-head"><span class="s-num">06</span><span class="s-tag" data-i18n="s6.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="s-body">
+          <h2 class="title rv" style="--i:0" data-i18n="s6.title"></h2>
+          <table class="bench rv" style="--i:1">
+            <colgroup><col class="c1"><col><col><col></colgroup>
+            <thead>
+              <tr>
+                <th scope="col" data-i18n="s6.th1"></th>
+                <th scope="col">Tornado Cash</th>
+                <th scope="col" data-i18n="s6.th3"></th>
+                <th scope="col" class="us">MongliPool</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td data-i18n="s6.row1"></td><td><span class="mk yes"><i class="ti ti-check" aria-hidden="true"></i><span class="sr" data-i18n="s6.yes"></span></span></td><td><span class="mk yes"><i class="ti ti-check" aria-hidden="true"></i><span class="sr" data-i18n="s6.yes"></span></span></td><td class="us"><span class="mk yes"><i class="ti ti-check" aria-hidden="true"></i><span class="sr" data-i18n="s6.yes"></span></span></td></tr>
+              <tr><td data-i18n="s6.row2"></td><td><span class="mk no"><i class="ti ti-x" aria-hidden="true"></i><span class="sr" data-i18n="s6.no"></span></span></td><td><span class="mk no"><i class="ti ti-x" aria-hidden="true"></i><span class="sr" data-i18n="s6.no"></span></span></td><td class="us"><span class="mk yes"><i class="ti ti-check" aria-hidden="true"></i><span class="sr" data-i18n="s6.yes"></span></span></td></tr>
+              <tr><td data-i18n="s6.row3"></td><td><span class="mk no"><i class="ti ti-x" aria-hidden="true"></i><span class="sr" data-i18n="s6.no"></span></span></td><td><span class="mk no"><i class="ti ti-x" aria-hidden="true"></i><span class="sr" data-i18n="s6.no"></span></span></td><td class="us"><span class="mk yes"><i class="ti ti-check" aria-hidden="true"></i><span class="sr" data-i18n="s6.yes"></span></span></td></tr>
+              <tr><td data-i18n="s6.row4"></td><td><span class="mk no"><i class="ti ti-x" aria-hidden="true"></i><span class="sr" data-i18n="s6.no"></span></span></td><td><span class="mk no"><i class="ti ti-x" aria-hidden="true"></i><span class="sr" data-i18n="s6.no"></span></span></td><td class="us"><span class="mk yes"><i class="ti ti-check" aria-hidden="true"></i><span class="sr" data-i18n="s6.yes"></span></span></td></tr>
+              <tr><td data-i18n="s6.row5"></td><td><span class="mk part"><i class="ti ti-minus" aria-hidden="true"></i><span class="sr" data-i18n="s6.part"></span></span></td><td><span class="mk no"><i class="ti ti-x" aria-hidden="true"></i><span class="sr" data-i18n="s6.no"></span></span></td><td class="us"><span class="mk yes"><i class="ti ti-check" aria-hidden="true"></i><span class="sr" data-i18n="s6.yes"></span></span></td></tr>
+              <tr><td data-i18n="s6.row6"></td><td><span class="mk yes"><i class="ti ti-check" aria-hidden="true"></i><span class="sr" data-i18n="s6.yes"></span></span></td><td><span class="mk part"><i class="ti ti-minus" aria-hidden="true"></i><span class="sr" data-i18n="s6.part"></span></span></td><td class="us"><span class="mk no"><i class="ti ti-x" aria-hidden="true"></i><span class="sr" data-i18n="s6.no"></span></span><span class="pend" data-i18n="s6.pending"></span></td></tr>
+            </tbody>
+          </table>
+          <div class="legend rv" style="--i:2" aria-hidden="true">
+            <span><span class="mk yes"><i class="ti ti-check"></i></span><span data-i18n="s6.yes"></span></span>
+            <span><span class="mk part"><i class="ti ti-minus"></i></span><span data-i18n="s6.part"></span></span>
+            <span><span class="mk no"><i class="ti ti-x"></i></span><span data-i18n="s6.no"></span></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 — DEMO -->
+      <section class="slide" aria-roledescription="slide">
+        <div class="s-head"><span class="s-num">07</span><span class="s-tag" data-i18n="s7.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="s-body">
+          <div class="title-row rv" style="--i:0">
+            <h2 class="title" data-i18n="s7.title"></h2>
+            <span class="pill pill-accent"><span class="dot-s"></span>Stellar Testnet</span>
+          </div>
+          <ol class="flow rv" style="--i:1">
+            <li><div class="flow-num" data-i18n="s7.step1.num"></div><div class="flow-t" data-i18n="s7.step1.title"></div><div class="flow-d" data-i18n="s7.step1.desc"></div></li>
+            <li><div class="flow-num" data-i18n="s7.step2.num"></div><div class="flow-t" data-i18n="s7.step2.title"></div><div class="flow-d" data-i18n="s7.step2.desc"></div></li>
+            <li><div class="flow-num" data-i18n="s7.step3.num"></div><div class="flow-t" data-i18n="s7.step3.title"></div><div class="flow-d" data-i18n="s7.step3.desc"></div></li>
+            <li><div class="flow-num" data-i18n="s7.step4.num"></div><div class="flow-t" data-i18n="s7.step4.title"></div><div class="flow-d" data-i18n="s7.step4.desc"></div></li>
+            <li><div class="flow-num" data-i18n="s7.step5.num"></div><div class="flow-t" data-i18n="s7.step5.title"></div><div class="flow-d" data-i18n="s7.step5.desc"></div></li>
+          </ol>
+          <div class="refs rv" style="--i:2">
+            <a class="ref" href="https://mongli-pool.vercel.app" target="_blank" rel="noopener"><span class="label"><span data-i18n="s7.link1.label"></span><i class="ti ti-arrow-up-right" aria-hidden="true"></i></span><span class="v">mongli-pool.vercel.app</span></a>
+            <a class="ref" href="https://github.com/ALFA117/MongliPool" target="_blank" rel="noopener"><span class="label"><span data-i18n="s7.link2.label"></span><i class="ti ti-arrow-up-right" aria-hidden="true"></i></span><span class="v">github.com/ALFA117/MongliPool</span></a>
+            <div class="ref"><span class="label" data-i18n="s7.link3.label"></span><span class="v" data-i18n="s7.link3.value"></span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 08 — ROADMAP -->
+      <section class="slide" aria-roledescription="slide">
+        <div class="s-head"><span class="s-num">08</span><span class="s-tag" data-i18n="s8.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="s-body">
+          <h2 class="title rv" style="--i:0" data-i18n="s8.title"></h2>
+          <ol class="timeline">
+            <li class="tl done rv" style="--i:1"><div class="tl-phase" data-i18n-html="s8.item1.phase"></div><span class="tl-rail" aria-hidden="true"></span><div class="tl-c"><div class="tl-t" data-i18n="s8.item1.title"></div><div class="tl-d" data-i18n="s8.item1.items"></div></div><span class="status done" data-i18n="s8.item1.status"></span></li>
+            <li class="tl next rv" style="--i:2"><div class="tl-phase" data-i18n-html="s8.item2.phase"></div><span class="tl-rail" aria-hidden="true"></span><div class="tl-c"><div class="tl-t" data-i18n="s8.item2.title"></div><div class="tl-d" data-i18n="s8.item2.items"></div></div><span class="status next" data-i18n="s8.item2.status"></span></li>
+            <li class="tl rv" style="--i:3"><div class="tl-phase" data-i18n-html="s8.item3.phase"></div><span class="tl-rail" aria-hidden="true"></span><div class="tl-c"><div class="tl-t" data-i18n="s8.item3.title"></div><div class="tl-d" data-i18n="s8.item3.items"></div></div><span class="status" data-i18n="s8.item3.status"></span></li>
+            <li class="tl rv" style="--i:4"><div class="tl-phase" data-i18n-html="s8.item4.phase"></div><span class="tl-rail" aria-hidden="true"></span><div class="tl-c"><div class="tl-t" data-i18n="s8.item4.title"></div><div class="tl-d" data-i18n="s8.item4.items"></div></div><span class="status" data-i18n="s8.item4.status"></span></li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- 09 — TEAM -->
+      <section class="slide" aria-roledescription="slide">
+        <div class="s-head"><span class="s-num">09</span><span class="s-tag" data-i18n="s9.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="s-body">
+          <div class="team">
+            <div class="portrait rv" style="--i:0"><img src="img/alfa.jpg" alt="ALFA — Mongli DAO founder" width="220" height="275"></div>
+            <div>
+              <div class="team-name rv" style="--i:1">- A L F A -</div>
+              <div class="team-role rv" style="--i:2" data-i18n="s9.dao"></div>
+              <p class="team-note rv" style="--i:3" data-i18n="s9.note"></p>
+              <div class="socials rv" style="--i:4">
+                <a class="social" href="https://x.com/ALFA_EDG" target="_blank" rel="noopener"><i class="ti ti-brand-x" aria-hidden="true"></i>@ALFA_EDG</a>
+                <a class="social" href="https://www.linkedin.com/in/edgar-lopez-baeza-6b5a22353/" target="_blank" rel="noopener"><i class="ti ti-brand-linkedin" aria-hidden="true"></i>LinkedIn</a>
+                <a class="social" href="https://instagram.com/ALFA_EDG_" target="_blank" rel="noopener"><i class="ti ti-brand-instagram" aria-hidden="true"></i>@ALFA_EDG_</a>
+                <a class="social" href="https://github.com/ALFA117" target="_blank" rel="noopener"><i class="ti ti-brand-github" aria-hidden="true"></i>ALFA117</a>
               </div>
-              <span class="road-status status-done" data-i18n="s8.item1.status"></span>
-            </div>
-            <div class="road-item">
-              <div class="road-phase" data-i18n-html="s8.item2.phase"></div>
-              <div class="road-content">
-                <div class="road-title" data-i18n="s8.item2.title"></div>
-                <div class="road-items" data-i18n="s8.item2.items"></div>
-              </div>
-              <span class="road-status status-next" data-i18n="s8.item2.status"></span>
-            </div>
-            <div class="road-item">
-              <div class="road-phase" data-i18n-html="s8.item3.phase"></div>
-              <div class="road-content">
-                <div class="road-title" data-i18n="s8.item3.title"></div>
-                <div class="road-items" data-i18n="s8.item3.items"></div>
-              </div>
-              <span class="road-status status-future" data-i18n="s8.item3.status"></span>
-            </div>
-            <div class="road-item">
-              <div class="road-phase" data-i18n-html="s8.item4.phase"></div>
-              <div class="road-content">
-                <div class="road-title" data-i18n="s8.item4.title"></div>
-                <div class="road-items" data-i18n="s8.item4.items"></div>
-              </div>
-              <span class="road-status status-future" data-i18n="s8.item4.status"></span>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 9 — TEAM -->
-      <section class="slide">
-        <div class="eyebrow"><span class="slide-tag" data-i18n="s9.tag"></span></div>
-        <div class="team-wrap">
-          <div class="team-card">
-            <div class="team-avatar-ring">
-              <img class="team-avatar" src="img/alfa.jpg" alt="ALFA — Mongli DAO founder">
-            </div>
-            <div class="team-name">- A L F A -</div>
-            <div class="team-dao" data-i18n="s9.dao"></div>
-            <div class="team-links">
-              <a class="team-link" href="https://x.com/ALFA_EDG" target="_blank" rel="noopener"><i class="ti ti-brand-x"></i>@ALFA_EDG</a>
-              <a class="team-link" href="https://www.linkedin.com/in/edgar-lopez-baeza-6b5a22353/" target="_blank" rel="noopener"><i class="ti ti-brand-linkedin"></i>LinkedIn</a>
-              <a class="team-link" href="https://instagram.com/ALFA_EDG_" target="_blank" rel="noopener"><i class="ti ti-brand-instagram"></i>@ALFA_EDG_</a>
-              <a class="team-link" href="https://github.com/ALFA117" target="_blank" rel="noopener"><i class="ti ti-brand-github"></i>ALFA117</a>
-            </div>
-            <div class="team-note" data-i18n="s9.note"></div>
+      <!-- 10 — CLOSING -->
+      <section class="slide" aria-roledescription="slide">
+        <div class="s-head"><span class="s-num">10</span><span class="s-tag" data-i18n="s10.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="close">
+          <div>
+            <h2 class="close-title rv" style="--i:0">MongliPool</h2>
+            <p class="close-sub rv" style="--i:1" data-i18n="s10.sub"></p>
+            <p class="close-foot rv" style="--i:2">Stellar Hacks: ZK 2025 · Mongli DAO · @ALFA_EDG_</p>
           </div>
-        </div>
-      </section>
-
-      <!-- SLIDE 10 — CTA -->
-      <section class="slide">
-        <div class="eyebrow"><span class="slide-tag" data-i18n="s10.tag"></span></div>
-        <div class="cta-wrap">
-          <div class="cta-bg">
-            <div class="cta-title">MongliPool</div>
-            <div class="cta-sub" data-i18n="s10.sub"></div>
-            <div class="cta-links">
-              <div class="cta-link">
-                <div class="cta-link-label" data-i18n="s10.link1.label"></div>
-                <div class="cta-link-url">mongli-pool.vercel.app</div>
-              </div>
-              <div class="cta-link">
-                <div class="cta-link-label" data-i18n="s10.link2.label"></div>
-                <div class="cta-link-url">github.com/ALFA117/MongliPool</div>
-              </div>
+          <div class="stack">
+            <div class="refs rv" style="--i:2">
+              <a class="ref" href="https://mongli-pool.vercel.app" target="_blank" rel="noopener"><span class="label"><span data-i18n="s10.link1.label"></span><i class="ti ti-arrow-up-right" aria-hidden="true"></i></span><span class="v">mongli-pool.vercel.app</span></a>
+              <a class="ref" href="https://github.com/ALFA117/MongliPool" target="_blank" rel="noopener"><span class="label"><span data-i18n="s10.link2.label"></span><i class="ti ti-arrow-up-right" aria-hidden="true"></i></span><span class="v">github.com/ALFA117/MongliPool</span></a>
             </div>
-            <div class="contracts">
-              <div class="contract-row"><span class="contract-name">Privacy Pool</span><span class="contract-id">CAPKM3CC...H4YFI7</span></div>
-              <div class="contract-row"><span class="contract-name">ASP Registry</span><span class="contract-id">CCVH3IBN...QIHX</span></div>
-              <div class="contract-row"><span class="contract-name">Groth16 Verifier</span><span class="contract-id">CAXRVY3I...U5LZ</span></div>
+            <div class="ledger rv" style="--i:3">
+              <div class="ledger-h"><span class="label" data-i18n="s10.contracts"></span><span class="pill pill-accent"><span class="dot-s"></span>Testnet</span></div>
+              <div class="ledger-r"><span>Privacy Pool</span><span>CAPKM3CC…H4YFI7</span></div>
+              <div class="ledger-r"><span>ASP Registry</span><span>CCVH3IBN…QIHX</span></div>
+              <div class="ledger-r"><span>Groth16 Verifier</span><span>CAXRVY3I…U5LZ</span></div>
             </div>
-            <div class="cta-footer">Stellar Hacks: ZK 2025 · Mongli DAO · @ALFA_EDG_</div>
           </div>
         </div>
       </section>
 
     </div>
-  </div>
+  </main>
 
-  <div class="controls">
-    <button class="nav-btn" id="prevBtn"><i class="ti ti-chevron-left"></i></button>
-    <div class="dots" id="dots"></div>
-    <button class="nav-btn" id="nextBtn"><i class="ti ti-chevron-right"></i></button>
-  </div>
+  <nav class="controls" aria-label="Slides">
+    <div class="hint" aria-hidden="true"><kbd>←</kbd><kbd>→</kbd><span id="hintText"></span></div>
+    <div class="nav">
+      <button class="icon-btn nav-btn" id="prevBtn" type="button"><i class="ti ti-arrow-left" aria-hidden="true"></i></button>
+      <div class="dots" id="dots"></div>
+      <button class="icon-btn nav-btn" id="nextBtn" type="button"><i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+    </div>
+    <div class="controls-r label">Mongli DAO</div>
+  </nav>
 </div>
-
-<div class="hint"><i class="ti ti-arrows-horizontal"></i> <span id="hintText"></span></div>
 
 <script>
   const translations = {
     en: {
       "meta.title": "MongliPool — Pitch Deck",
       "meta.desc": "MongliPool: the first privacy pool with native regulatory compliance on Stellar. Real ZK cryptography, verified on-chain.",
-      "hint": "use the keyboard arrows",
+      "hint": "to navigate",
       "aria.prev": "Previous", "aria.next": "Next", "aria.dot": "Go to slide",
       "s1.tag": "Cover",
       "s1.sub": "The first privacy pool with native regulatory compliance on Stellar — real ZK cryptography, verified on-chain.",
@@ -912,7 +830,7 @@
     es: {
       "meta.title": "MongliPool — Presentación",
       "meta.desc": "MongliPool: el primer privacy pool con cumplimiento regulatorio nativo en Stellar. Criptografía ZK real, verificada on-chain.",
-      "hint": "usa las flechas del teclado",
+      "hint": "para navegar",
       "aria.prev": "Anterior", "aria.next": "Siguiente", "aria.dot": "Ir a la slide",
       "s1.tag": "Portada",
       "s1.sub": "El primer privacy pool con cumplimiento regulatorio nativo en Stellar — criptografía ZK real, verificada on-chain.",
@@ -1013,6 +931,28 @@
       "s10.link2.label": "Repositorio"
     }
   };
+
+
+  // Keys added by the 2026-11 redesign (cover figure, legend, ledger) and
+  // status labels without the inline check glyph.
+  Object.assign(translations.en, {
+    "s1.eyebrow": "Pitch deck — Stellar Hacks: ZK 2025",
+    "s1.k1": "Proof system", "s1.k2": "Network", "s1.k3": "Built by",
+    "s1.root": "root", "s1.leaves": "commitments",
+    "s1.fig": "Membership proof: the path to the root is verified on-chain; which leaf is yours stays hidden.",
+    "s6.yes": "Yes", "s6.part": "Partial", "s6.no": "No",
+    "s8.item1.status": "Done",
+    "s10.contracts": "Soroban contracts"
+  });
+  Object.assign(translations.es, {
+    "s1.eyebrow": "Presentación — Stellar Hacks: ZK 2025",
+    "s1.k1": "Sistema de pruebas", "s1.k2": "Red", "s1.k3": "Construido por",
+    "s1.root": "raíz", "s1.leaves": "commitments",
+    "s1.fig": "Prueba de pertenencia: el camino a la raíz se verifica on-chain; cuál hoja es la tuya queda oculto.",
+    "s6.yes": "Sí", "s6.part": "Parcial", "s6.no": "No",
+    "s8.item1.status": "Listo",
+    "s10.contracts": "Contratos Soroban"
+  });
 
   const THEME_KEY = 'mongliTheme';
   const themeToggle = document.getElementById('themeToggle');
@@ -1119,7 +1059,5 @@
   applyTranslations();
   render();
 </script>
-
-<script type="module" src="ambient.js"></script>
 </body>
 </html>
