@@ -183,7 +183,7 @@
   .s-head .s-num{ color:var(--accent); font-weight:500; }
   .s-head .s-tag{ color:var(--text-2); }
   .s-head .s-meta{ margin-left:auto; white-space:nowrap; }
-  .s-body{ flex:1 0 auto; display:flex; flex-direction:column; justify-content:center; }
+  .s-body{ flex:1 0 auto; display:flex; flex-direction:column; justify-content:flex-start; }
   .s-body > *{ flex-shrink:0; }
 
   .title{
@@ -240,7 +240,7 @@
   @media (prefers-reduced-motion: reduce){ .slide.active .merkle .e-path{ animation:none; } }
 
   /* ── 02 Problem ─────────────────────────────────────────────────────── */
-  .problem{ display:grid; grid-template-columns:1.35fr 1fr; gap:clamp(20px,3vw,40px); align-items:stretch; }
+  .problem{ display:grid; grid-template-columns:1.35fr 1fr; gap:clamp(20px,3vw,40px); align-items:start; }
   .rows{ list-style:none; border-top:1px solid var(--line); }
   .rows li{ display:grid; grid-template-columns:40px 1fr; gap:var(--s4); padding:var(--s4) 0; border-bottom:1px solid var(--line); }
   .row-ic{ width:40px; height:40px; border-radius:var(--r-sm); border:1px solid var(--line-strong); display:grid; place-items:center; color:var(--danger); }
@@ -249,7 +249,7 @@
   .row-d{ font-size:15px; color:var(--text-2); }
   .callout{
     background:var(--accent-soft); border:1px solid var(--accent-line); border-radius:var(--r-md);
-    padding:clamp(20px,2.4vw,28px); display:flex; flex-direction:column; gap:var(--s3); justify-content:center;
+    padding:clamp(20px,2.4vw,28px); display:flex; flex-direction:column; gap:var(--s3); justify-content:flex-start;
   }
   .callout .ic{ width:44px; height:44px; border-radius:var(--r-sm); background:var(--accent); color:var(--accent-ink); display:grid; place-items:center; }
   .callout .ic i{ font-size:22px; }
@@ -316,12 +316,13 @@
   .title-row .title{ margin-bottom:0; }
   .title-row .pill{ margin-top:var(--s2); }
   .flow{ list-style:none; display:grid; grid-template-columns:repeat(5,1fr); border:1px solid var(--line); border-radius:var(--r-md); overflow:hidden; margin-bottom:var(--s5); }
-  .flow li{ padding:var(--s4); background:var(--panel-2); }
+  .flow li{ padding:var(--s5) var(--s4); background:var(--panel-2); }
   .flow li + li{ border-left:1px solid var(--line); }
   .flow-num{ font:500 12px/1 var(--font-mono); color:var(--accent); margin-bottom:var(--s3); }
   .flow-t{ font-size:16px; font-weight:600; margin-bottom:var(--s1); }
   .flow-d{ font-size:14px; color:var(--text-2); line-height:1.5; }
   .refs{ display:grid; grid-template-columns:repeat(3,1fr); gap:var(--s3); }
+  .s-body > .refs:last-child{ margin-top:auto; }
   .ref{
     display:flex; flex-direction:column; gap:2px; min-height:44px;
     padding:var(--s3) var(--s4); border:1px solid var(--line); border-radius:var(--r-md);
@@ -336,6 +337,8 @@
   .timeline{ list-style:none; }
   .tl{ display:grid; grid-template-columns:96px 20px 1fr auto; gap:var(--s4); align-items:start; padding:var(--s3) 0; }
   .tl-phase{ font:400 13px/1.45 var(--font-mono); color:var(--text-3); padding-top:2px; }
+  .tl-phase span{ display:block; }
+  .tl-phase span:first-child{ color:var(--text-2); }
   .tl-rail{ position:relative; align-self:stretch; }
   .tl-rail::before{ content:""; position:absolute; left:9px; top:0; bottom:calc(-2 * var(--s3)); width:1px; background:var(--line-strong); }
   .tl:first-child .tl-rail::before{ top:10px; }
@@ -350,10 +353,10 @@
   .status.next{ border-color:var(--accent-line); color:var(--accent); }
 
   /* ── 09 Team ────────────────────────────────────────────────────────── */
-  .team{ display:grid; grid-template-columns:auto 1fr; gap:clamp(24px,4vw,56px); align-items:center; max-width:880px; margin:0 auto; width:100%; }
-  .portrait{ width:clamp(140px,17vw,220px); aspect-ratio:4/5; border-radius:var(--r-md); overflow:hidden; border:1px solid var(--line-strong); background:var(--panel-2); }
+  .team{ display:grid; grid-template-columns:auto 1fr; gap:clamp(24px,4vw,56px); align-items:start; width:100%; }
+  .portrait{ width:clamp(160px,20vw,264px); aspect-ratio:4/5; border-radius:var(--r-md); overflow:hidden; border:1px solid var(--line-strong); background:var(--panel-2); }
   .portrait img{ width:100%; height:100%; object-fit:cover; object-position:50% 35%; display:block; }
-  .team-name{ font-family:var(--font-display); font-weight:400; font-size:clamp(34px,4vw,52px); line-height:1; letter-spacing:.04em; margin-bottom:var(--s3); }
+  .team-name{ font-family:var(--font-display); font-weight:400; font-size:clamp(34px,4vw,52px); line-height:1; letter-spacing:-.01em; margin-bottom:var(--s3); }
   .team-role{ font-family:var(--font-mono); font-size:14px; color:var(--accent); margin-bottom:var(--s4); }
   .team-note{ font-size:17px; color:var(--text-2); max-width:46ch; margin-bottom:var(--s5); }
   .socials{ display:flex; flex-wrap:wrap; gap:var(--s2); }
@@ -379,6 +382,22 @@
   .ledger-r + .ledger-r{ border-top:1px solid var(--line); }
   .ledger-r span:first-child{ color:var(--text-2); }
   .ledger-r span:last-child{ font-family:var(--font-mono); color:var(--text); }
+
+  /* "More below" cue for slides that scroll inside the card (phones). */
+  .more-cue{
+    position:absolute; left:1px; right:1px; bottom:1px; height:72px; z-index:2;
+    display:flex; align-items:flex-end; justify-content:center; padding-bottom:var(--s3);
+    background:linear-gradient(to bottom, transparent, var(--panel) 70%);
+    border-radius:0 0 var(--r-lg) var(--r-lg);
+    pointer-events:none; opacity:0; transition:opacity .25s var(--ease);
+  }
+  .more-cue.on{ opacity:1; }
+  .more-chip{
+    display:inline-flex; align-items:center; gap:6px; padding:6px 10px;
+    font:500 12px/1 var(--font-mono); color:var(--text-2);
+    background:var(--panel); border:1px solid var(--line-strong); border-radius:999px;
+  }
+  .more-chip i{ font-size:14px; color:var(--accent); }
 
   /* ── Controls ───────────────────────────────────────────────────────── */
   .controls{
@@ -408,6 +427,7 @@
     .flow li{ border-bottom:1px solid var(--line); }
     .flow li:nth-child(even){ border-left:1px solid var(--line); }
   }
+  @media (max-width:360px){ .counter{ display:none; } .spec dd.mono{ font-size:13px; white-space:nowrap; } }
   @media (max-width:640px){
     .brand-sep, .brand-tag, .hint{ display:none; }
     .topbar-right{ gap:var(--s2); }
@@ -415,6 +435,8 @@
     .controls{ grid-template-columns:1fr; justify-items:center; }
     .controls-r{ display:none; }
     .slide{ border-radius:var(--r-md); padding:24px 20px; }
+    .more-cue{ border-radius:0 0 var(--r-md) var(--r-md); }
+    .merkle{ max-width:320px; }
     .s-body{ justify-content:flex-start; }
     .cover{ align-content:start; }
     .spec{ grid-template-columns:1fr 1fr; }
@@ -430,13 +452,22 @@
     .sheet th, .sheet td, .sheet tr:first-child th, .sheet tr:first-child td{ border:0; padding:0; }
     .sheet .v{ margin:2px 0; width:auto; }
     .sheet th{ width:auto; }
-    .bench col.c1{ width:34%; }
-    .bench th, .bench td{ padding:var(--s3) var(--s1); }
-    .bench thead th{ font-size:12px; overflow-wrap:anywhere; }
-    .bench td:first-child{ font-size:14px; }
+    /* Benchmark on phones: the feature becomes a full-width row label and the
+       three columns get the whole width, so headers break only between words. */
+    .bench, .bench thead, .bench tbody{ display:block; }
+    .bench colgroup{ display:none; }
+    .bench tr{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .bench th, .bench td{ display:block; padding:var(--s2) var(--s1); }
+    .bench thead th{ font:500 12px/1.35 var(--font-sans); letter-spacing:0; overflow-wrap:normal; word-break:normal; hyphens:none; }
+    .bench thead th:first-child{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; padding:0; border:0; }
+    .bench td:first-child{ grid-column:1 / -1; font-size:15px; padding:var(--s3) 0 var(--s1); border-bottom:0; }
+    .bench thead .us{ border-radius:var(--r-sm) var(--r-sm) 0 0; }
+    .bench tbody .us{ border-radius:0; }
+    .bench tbody tr:last-child .us{ border-radius:0 0 var(--r-sm) var(--r-sm); }
     .tl{ grid-template-columns:20px 1fr; gap:var(--s1) var(--s3); }
     .tl-phase{ grid-column:2; grid-row:1; }
-    .tl-phase br{ display:none; }
+    .tl-phase span{ display:inline; }
+    .tl-phase span + span::before{ content:"·"; color:var(--text-3); margin:0 6px; }
     .tl-rail{ grid-column:1; grid-row:1 / span 3; }
     .tl-c{ grid-column:2; }
     .tl .status{ grid-column:2; justify-self:start; margin-top:var(--s1); }
@@ -477,7 +508,7 @@
 
       <!-- 01 — COVER -->
       <section class="slide" aria-roledescription="slide">
-        <div class="s-head"><span class="s-num">01</span><span class="s-tag" data-i18n="s1.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="s-head"><span class="s-num">01</span><span class="s-tag" data-i18n="s1.tag"></span></div>
         <div class="cover">
           <div>
             <p class="cover-eyebrow rv" style="--i:0" data-i18n="s1.eyebrow"></p>
@@ -527,7 +558,7 @@
 
       <!-- 02 — PROBLEM -->
       <section class="slide" aria-roledescription="slide">
-        <div class="s-head"><span class="s-num">02</span><span class="s-tag" data-i18n="s2.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="s-head"><span class="s-num">02</span><span class="s-tag" data-i18n="s2.tag"></span></div>
         <div class="s-body">
           <h2 class="title rv" style="--i:0" data-i18n="s2.title"></h2>
           <div class="problem">
@@ -547,7 +578,7 @@
 
       <!-- 03 — SOLUTION -->
       <section class="slide" aria-roledescription="slide">
-        <div class="s-head"><span class="s-num">03</span><span class="s-tag" data-i18n="s3.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="s-head"><span class="s-num">03</span><span class="s-tag" data-i18n="s3.tag"></span></div>
         <div class="s-body">
           <h2 class="title rv" style="--i:0" data-i18n="s3.title"></h2>
           <blockquote class="quote rv" style="--i:1" data-i18n="s3.tagline"></blockquote>
@@ -561,7 +592,7 @@
 
       <!-- 04 — TECH -->
       <section class="slide" aria-roledescription="slide">
-        <div class="s-head"><span class="s-num">04</span><span class="s-tag" data-i18n="s4.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="s-head"><span class="s-num">04</span><span class="s-tag" data-i18n="s4.tag"></span></div>
         <div class="s-body">
           <h2 class="title rv" style="--i:0" data-i18n="s4.title"></h2>
           <table class="sheet rv" style="--i:1">
@@ -579,7 +610,7 @@
 
       <!-- 05 — COMPLIANCE -->
       <section class="slide" aria-roledescription="slide">
-        <div class="s-head"><span class="s-num">05</span><span class="s-tag" data-i18n="s5.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="s-head"><span class="s-num">05</span><span class="s-tag" data-i18n="s5.tag"></span></div>
         <div class="s-body">
           <h2 class="title rv" style="--i:0" data-i18n="s5.title"></h2>
           <div class="pillars rv" style="--i:1">
@@ -596,7 +627,7 @@
 
       <!-- 06 — BENCHMARK -->
       <section class="slide" aria-roledescription="slide">
-        <div class="s-head"><span class="s-num">06</span><span class="s-tag" data-i18n="s6.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="s-head"><span class="s-num">06</span><span class="s-tag" data-i18n="s6.tag"></span></div>
         <div class="s-body">
           <h2 class="title rv" style="--i:0" data-i18n="s6.title"></h2>
           <table class="bench rv" style="--i:1">
@@ -606,7 +637,7 @@
                 <th scope="col" data-i18n="s6.th1"></th>
                 <th scope="col">Tornado Cash</th>
                 <th scope="col" data-i18n="s6.th3"></th>
-                <th scope="col" class="us">MongliPool</th>
+                <th scope="col" class="us">Mongli<wbr>Pool</th>
               </tr>
             </thead>
             <tbody>
@@ -628,7 +659,7 @@
 
       <!-- 07 — DEMO -->
       <section class="slide" aria-roledescription="slide">
-        <div class="s-head"><span class="s-num">07</span><span class="s-tag" data-i18n="s7.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="s-head"><span class="s-num">07</span><span class="s-tag" data-i18n="s7.tag"></span></div>
         <div class="s-body">
           <div class="title-row rv" style="--i:0">
             <h2 class="title" data-i18n="s7.title"></h2>
@@ -651,7 +682,7 @@
 
       <!-- 08 — ROADMAP -->
       <section class="slide" aria-roledescription="slide">
-        <div class="s-head"><span class="s-num">08</span><span class="s-tag" data-i18n="s8.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="s-head"><span class="s-num">08</span><span class="s-tag" data-i18n="s8.tag"></span></div>
         <div class="s-body">
           <h2 class="title rv" style="--i:0" data-i18n="s8.title"></h2>
           <ol class="timeline">
@@ -665,12 +696,12 @@
 
       <!-- 09 — TEAM -->
       <section class="slide" aria-roledescription="slide">
-        <div class="s-head"><span class="s-num">09</span><span class="s-tag" data-i18n="s9.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="s-head"><span class="s-num">09</span><span class="s-tag" data-i18n="s9.tag"></span></div>
         <div class="s-body">
           <div class="team">
             <div class="portrait rv" style="--i:0"><img src="img/alfa.jpg" alt="ALFA — Mongli DAO founder" width="220" height="275"></div>
             <div>
-              <div class="team-name rv" style="--i:1">- A L F A -</div>
+              <div class="team-name rv" style="--i:1">ALFA</div>
               <div class="team-role rv" style="--i:2" data-i18n="s9.dao"></div>
               <p class="team-note rv" style="--i:3" data-i18n="s9.note"></p>
               <div class="socials rv" style="--i:4">
@@ -686,7 +717,7 @@
 
       <!-- 10 — CLOSING -->
       <section class="slide" aria-roledescription="slide">
-        <div class="s-head"><span class="s-num">10</span><span class="s-tag" data-i18n="s10.tag"></span><span class="s-meta">MongliPool</span></div>
+        <div class="s-head"><span class="s-num">10</span><span class="s-tag" data-i18n="s10.tag"></span></div>
         <div class="close">
           <div>
             <h2 class="close-title rv" style="--i:0">MongliPool</h2>
@@ -708,6 +739,7 @@
         </div>
       </section>
 
+      <div class="more-cue" id="moreCue" aria-hidden="true"><span class="more-chip"><span id="moreText"></span><i class="ti ti-arrow-down"></i></span></div>
     </div>
   </main>
 
@@ -718,7 +750,7 @@
       <div class="dots" id="dots"></div>
       <button class="icon-btn nav-btn" id="nextBtn" type="button"><i class="ti ti-arrow-right" aria-hidden="true"></i></button>
     </div>
-    <div class="controls-r label">Mongli DAO</div>
+    <div class="controls-r" aria-hidden="true"></div>
   </nav>
 </div>
 
@@ -728,6 +760,7 @@
       "meta.title": "MongliPool — Pitch Deck",
       "meta.desc": "MongliPool: the first privacy pool with native regulatory compliance on Stellar. Real ZK cryptography, verified on-chain.",
       "hint": "to navigate",
+      "more": "Scroll for more",
       "aria.prev": "Previous", "aria.next": "Next", "aria.dot": "Go to slide",
       "s1.tag": "Cover",
       "s1.sub": "The first privacy pool with native regulatory compliance on Stellar — real ZK cryptography, verified on-chain.",
@@ -803,19 +836,19 @@
       "s7.link3.value": "18/18 passing · Rust · 3 contracts",
       "s8.tag": "Roadmap",
       "s8.title": "From hackathon MVP to production protocol",
-      "s8.item1.phase": "Phase 1<br/>Now",
+      "s8.item1.phase": "<span>Phase 1</span><span>Now</span>",
       "s8.item1.title": "Hackathon MVP (current)",
       "s8.item1.items": "On-chain Groth16/BN254 · Asymmetric view key · Basic ASP · variable amount · testnet",
       "s8.item1.status": "✓ Done",
-      "s8.item2.phase": "Phase 2<br/>Q3 2025",
+      "s8.item2.phase": "<span>Phase 2</span><span>Q3 2025</span>",
       "s8.item2.title": "Production security",
       "s8.item2.items": "Public MPC ceremony · External circuit audit · DAO multisig view key · Trusted relayer",
       "s8.item2.status": "Next",
-      "s8.item3.phase": "Phase 3<br/>Q4 2025",
+      "s8.item3.phase": "<span>Phase 3</span><span>Q4 2025</span>",
       "s8.item3.title": "Confidential Tokens (OZ) integration",
       "s8.item3.items": "CT as a second privacy layer · Full privacy: routing + balances · Post-CT audit (Aug 2025)",
       "s8.item3.status": "Planned",
-      "s8.item4.phase": "Phase 4<br/>2026",
+      "s8.item4.phase": "<span>Phase 4</span><span>2026</span>",
       "s8.item4.title": "Mainnet and expansion",
       "s8.item4.items": "Mongli DAO as first pilot user · Multi-asset (USDC, other SEP-41) · API for other Stellar projects",
       "s8.item4.status": "Vision",
@@ -831,6 +864,7 @@
       "meta.title": "MongliPool — Presentación",
       "meta.desc": "MongliPool: el primer privacy pool con cumplimiento regulatorio nativo en Stellar. Criptografía ZK real, verificada on-chain.",
       "hint": "para navegar",
+      "more": "Desliza para ver más",
       "aria.prev": "Anterior", "aria.next": "Siguiente", "aria.dot": "Ir a la slide",
       "s1.tag": "Portada",
       "s1.sub": "El primer privacy pool con cumplimiento regulatorio nativo en Stellar — criptografía ZK real, verificada on-chain.",
@@ -906,19 +940,19 @@
       "s7.link3.value": "18/18 passing · Rust · 3 contratos",
       "s8.tag": "Roadmap",
       "s8.title": "De MVP de hackathon a protocolo de producción",
-      "s8.item1.phase": "Fase 1<br/>Ahora",
+      "s8.item1.phase": "<span>Fase 1</span><span>Ahora</span>",
       "s8.item1.title": "MVP de hackathon (actual)",
       "s8.item1.items": "Groth16/BN254 on-chain · View key asimétrica · ASP básico · monto variable · testnet",
       "s8.item1.status": "✓ Listo",
-      "s8.item2.phase": "Fase 2<br/>Q3 2025",
+      "s8.item2.phase": "<span>Fase 2</span><span>Q3 2025</span>",
       "s8.item2.title": "Seguridad de producción",
       "s8.item2.items": "Ceremonia MPC pública · Auditoría externa del circuito · View key multisig DAO · Relayer de confianza",
       "s8.item2.status": "Siguiente",
-      "s8.item3.phase": "Fase 3<br/>Q4 2025",
+      "s8.item3.phase": "<span>Fase 3</span><span>Q4 2025</span>",
       "s8.item3.title": "Integración con Confidential Tokens (OZ)",
       "s8.item3.items": "CT como capa 2 de privacidad · Privacidad total: routing + balances · Post-auditoría CT (ago 2025)",
       "s8.item3.status": "Planificado",
-      "s8.item4.phase": "Fase 4<br/>2026",
+      "s8.item4.phase": "<span>Fase 4</span><span>2026</span>",
       "s8.item4.title": "Mainnet y expansión",
       "s8.item4.items": "Mongli DAO como primer usuario piloto · Multi-asset (USDC, otros SEP-41) · API para otros proyectos de Stellar",
       "s8.item4.status": "Visión",
@@ -936,7 +970,7 @@
   // Keys added by the 2026-11 redesign (cover figure, legend, ledger) and
   // status labels without the inline check glyph.
   Object.assign(translations.en, {
-    "s1.eyebrow": "Pitch deck — Stellar Hacks: ZK 2025",
+    "s1.eyebrow": "Pitch deck",
     "s1.k1": "Proof system", "s1.k2": "Network", "s1.k3": "Built by",
     "s1.root": "root", "s1.leaves": "commitments",
     "s1.fig": "Membership proof: the path to the root is verified on-chain; which leaf is yours stays hidden.",
@@ -945,7 +979,7 @@
     "s10.contracts": "Soroban contracts"
   });
   Object.assign(translations.es, {
-    "s1.eyebrow": "Presentación — Stellar Hacks: ZK 2025",
+    "s1.eyebrow": "Presentación",
     "s1.k1": "Sistema de pruebas", "s1.k2": "Red", "s1.k3": "Construido por",
     "s1.root": "raíz", "s1.leaves": "commitments",
     "s1.fig": "Prueba de pertenencia: el camino a la raíz se verifica on-chain; cuál hoja es la tuya queda oculto.",
@@ -997,6 +1031,7 @@
     document.getElementById('pageTitle').textContent = dict['meta.title'];
     document.getElementById('pageDesc').setAttribute('content', dict['meta.desc']);
     document.getElementById('hintText').textContent = dict['hint'];
+    document.getElementById('moreText').textContent = dict['more'];
     prevBtn.setAttribute('aria-label', dict['aria.prev']);
     nextBtn.setAttribute('aria-label', dict['aria.next']);
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -1032,7 +1067,18 @@
     progressBar.style.width = ((current + 1) / total * 100) + '%';
     prevBtn.disabled = current === 0;
     nextBtn.disabled = current === total - 1;
+    slides[current].scrollTop = 0;
+    requestAnimationFrame(updateCue);
   }
+
+  const moreCue = document.getElementById('moreCue');
+  function updateCue(){
+    const s = slides[current];
+    const more = s.scrollHeight - s.clientHeight - s.scrollTop > 24;
+    moreCue.classList.toggle('on', more);
+  }
+  slides.forEach(s => s.addEventListener('scroll', updateCue, { passive:true }));
+  window.addEventListener('resize', updateCue);
 
   function goTo(i){
     current = Math.max(0, Math.min(total - 1, i));
